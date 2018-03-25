@@ -307,7 +307,7 @@ a#skip-link:focus {
   list-style-type: none;
   overflow: hidden;
   padding: 1.5rem;
-  width: 90%;
+  width: calc(90% - 1.5rem);
   margin: auto;
   margin-bottom: 3rem;
 }
