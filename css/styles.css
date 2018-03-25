@@ -241,7 +241,8 @@ a#skip-link:focus {
 }
 .inside #map {
   background-color: #ccc;
-  width: inherit;
+  max-width: 90%;
+  margin: auto;
 }
 .inside #footer {
   bottom: 0;
