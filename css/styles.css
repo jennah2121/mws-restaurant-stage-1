@@ -305,9 +305,11 @@ a#skip-link:focus {
   border: 2px solid #f3f3f3;
   display: block;
   list-style-type: none;
-  margin: 0 0 3rem;
   overflow: hidden;
   padding: 1.5rem;
+  width: 90%;
+  margin: auto;
+  margin-bottom: 3rem;
 }
 
 #reviews-list li p:first-child {
