@@ -48,7 +48,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
   color: white;
   font-size: 8pt;
   letter-spacing: 1px;
-  padding: 25px;
+  padding: 25px 0px;
   text-align: center;
   text-transform: uppercase;
 }
@@ -235,7 +235,7 @@ a#skip-link:focus {
   z-index: 1000;
 }
 .inside #map-container {
-  background: blue none repeat scroll 0 0;
+  background:#f3f3f3 none repeat scroll 0 0;
 }
 .inside #map {
   background-color: #ccc;
@@ -243,7 +243,7 @@ a#skip-link:focus {
 .inside #footer {
   bottom: 0;
   position: absolute;
-  width: 95%;
+  width: 100%;
 }
 #restaurant-name {
   color: #0472ca; /*was #f18200;*/
