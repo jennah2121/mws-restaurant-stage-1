@@ -74,5 +74,5 @@ typings/
 # dotenv environment variables file
 .env
 
-# File that holds API keys
-config.js
+# Contains files that hold the API keys instead of placeholder text
+build/
