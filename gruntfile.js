@@ -13,29 +13,76 @@ module.exports = function (grunt) {
           ]
         },
         files: [
-          { expand: true, flatten: true, src: ['index.html', 'restaurant.html'], dest: 'build/' }
+          { 
+            expand: true, 
+            flatten: true, 
+            src: ['index.html', 'restaurant.html'], 
+            dest: 'build/' 
+          }
         ]
       }
     },
     //Configure grunt-contrib-copy
     copy: {
       build: {
-        files:[
+        files: [
           //Copy all folders and files needed to run the project locally
           {
-            expand: true, 
-            cwd: __dirname, 
-            src: ['**', '!*.html', '!**/build/**', '!**/node_modules/**', '!*.json', '!*.md', '!gruntfile.js'], 
+            expand: true,
+            cwd: __dirname,
+            src: ['**', '!*.html', '!**/build/**', '!**/node_modules/**', '!*.json', '!*.md', '!gruntfile.js', '!**/img/**'],
             dest: 'build/'
           }
         ]
       }
-
+    },
+    //Configure responsive-images
+    responsive_images: {
+      dev: {
+        options: {
+          engine: 'gm',
+          sizes: [
+            {
+              name: 'small-main',
+              width: 269,
+              height: 204,
+              quality: 50
+            },
+            {
+              name: 'large-main',
+              width: 317,
+              quality: 50
+            },
+            {
+              name: 'small-details',
+              width: 288,
+              quality: 50,
+            },
+            {
+              name: 'med-details',
+              width: 337,
+              quality: 50,
+            },
+            {
+              name: 'large-details',
+              width: 425,
+              quality: 100,
+            }
+          ]
+        },
+        files: [{
+          expand: true,
+          src: '*.jpg',
+          cwd: 'img/',
+          dest: 'build/images/'
+        }]
+      }
     }
+
   });
   grunt.loadNpmTasks('grunt-replace');
   grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.registerTask('default', ['copy', 'replace']);
+  grunt.loadNpmTasks('grunt-responsive-images');
+  grunt.registerTask('default', ['replace', 'responsive_images', 'copy']);
 }
 
-console.log('I am located here: ', __dirname);
