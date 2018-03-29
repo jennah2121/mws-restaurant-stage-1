@@ -177,6 +177,7 @@ a#skip-link:focus {
   font-family: Arial,sans-serif;
   min-height: 380px;
   text-align: left;
+  width: 100%;
   max-width: 320px; 
   margin: auto;
   margin-bottom: 1.5rem;
