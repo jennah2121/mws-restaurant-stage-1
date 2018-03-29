@@ -150,21 +150,17 @@ class DBHelper {
    * Restaurant image URL.
    */
   static imageUrlForRestaurant(restaurant) {
-    console.log(`/img/${restaurant.photograph}`);   // is this --> /img/1.jpg
 
     //create an object which contains all the photo sizes for the restaurant id
     let imagesObj = {
-      original: `/img/${restaurant.photograph}`,
-      smallMain: `/img/${restaurant.photograph.slice(0, restaurant.photograph.indexOf('.'))}-small-main.jpg`,
-      largeMain: `/img/${restaurant.photograph.slice(0, restaurant.photograph.indexOf('.'))}-large-main.jpg`,
-      smallDetails: `/img/${restaurant.photograph.slice(0, restaurant.photograph.indexOf('.'))}-small-details.jpg`,
-      medDetails: `/img/${restaurant.photograph.slice(0, restaurant.photograph.indexOf('.'))}-med-details.jpg`,
-      largeDetails: `/img/${restaurant.photograph.slice(0, restaurant.photograph.indexOf('.'))}-large-details.jpg`,
+      original: `/images/${restaurant.photograph}`,
+      smallMain: `/images/${restaurant.photograph.slice(0, restaurant.photograph.indexOf('.'))}-small-main.jpg`,
+      largeMain: `/images/${restaurant.photograph.slice(0, restaurant.photograph.indexOf('.'))}-large-main.jpg`,
+      smallDetails: `/images/${restaurant.photograph.slice(0, restaurant.photograph.indexOf('.'))}-small-details.jpg`,
+      medDetails: `/images/${restaurant.photograph.slice(0, restaurant.photograph.indexOf('.'))}-med-details.jpg`,
+      largeDetails: `/images/${restaurant.photograph.slice(0, restaurant.photograph.indexOf('.'))}-large-details.jpg`,
     }
-    console.log('the images object is: ', imagesObj)
 
-
-   // return (`/img/${restaurant.photograph}`);
    return imagesObj;
   }
 
