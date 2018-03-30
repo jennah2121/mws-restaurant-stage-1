@@ -1,6 +1,7 @@
 let restaurants,
   neighborhoods,
-  cuisines
+  cuisines,
+  observer
 var map
 var markers = []
 
@@ -130,6 +131,48 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
     ul.append(createRestaurantHTML(restaurant));
   });
   addMarkersToMap();
+  createObserver();
+}
+
+
+/**
+ * Create an observer to watch for when li's become visible
+ */
+createObserver = () => {
+  const options = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.10
+  }
+  const imagesList = document.querySelectorAll('#restaurants-list li');
+  console.log('the images in their lists: ', imagesList);
+  
+  observer = new IntersectionObserver(lazyLoadImage, options);
+  imagesList.forEach(image => {
+    observer.observe(image)
+  });
+}
+
+/**
+ * Load images only when they become visible 
+ */
+lazyLoadImage = (entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) {
+      let source1 = entry.target.firstChild.firstChild;
+      let source2 = source1.nextSibling;
+      let image = source2.nextSibling;
+
+      //stop watching the image
+      observer.unobserve(entry.target);
+
+      //set the srcset attribute of the sources and the src attribute of image
+      source1.setAttribute('srcset', `${source1.getAttribute('data-srcset')}`);
+      source2.setAttribute('srcset', `${source2.getAttribute('data-srcset')}`);
+      image.setAttribute('src', `${image.getAttribute('data-src')}`);
+
+    }
+  })
 }
 
 /**
@@ -143,15 +186,16 @@ createRestaurantHTML = (restaurant) => {
 
   const source1 = document.createElement('source');
   source1.setAttribute('media', '(min-width: 321px)');
-  source1.setAttribute('srcset', `${imagesObj.largeMain} 1x, ${imagesObj.largeMain} 2x`) 
+  source1.setAttribute('data-srcset', `${imagesObj.largeMain} 1x, ${imagesObj.largeMain} 2x`) 
 
   const source2 = document.createElement('source');
   source2.setAttribute('media', '(min-width: 0px)');
-  source2.setAttribute('srcset', `${imagesObj.smallMain} 1x, ${imagesObj.smallMain} 2x`)
+  source2.setAttribute('data-srcset', `${imagesObj.smallMain} 1x, ${imagesObj.smallMain} 2x`)
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
-  image.src = imagesObj.largeMain;
+  image.setAttribute('data-src', `${imagesObj.largeMain}`);
+  //image.src = imagesObj.largeMain;
   image.alt = `A picture of ${restaurant.name} restaurant`;
 
   picture.append(source1);
