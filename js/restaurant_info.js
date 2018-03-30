@@ -55,10 +55,31 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
 
-  const image = document.getElementById('restaurant-img');
+  let imagesObj = DBHelper.imageUrlForRestaurant(restaurant);
+  
+  const picture = document.getElementById('restaurant-img');
+
+  const source1 = document.createElement('source');
+  source1.setAttribute('media', '(min-width: 425px)');
+  source1.setAttribute('srcset', `${imagesObj.largeDetails} 1x, ${imagesObj.largeDetails} 2x`); 
+
+  const source2 = document.createElement('source');
+  source2.setAttribute('media', '(min-width: 375px)');
+  source2.setAttribute('srcset', `${imagesObj.medDetails} 1x, ${imagesObj.medDetails} 2x`);
+
+  const source3 = document.createElement('source');
+  source3.setAttribute('media', '(min-width: 0px)');
+  source3.setAttribute('srcset', `${imagesObj.smallDetails} 1x, ${imagesObj.smallDetails} 2x`);
+
+  const image = document.createElement('img');
   image.className = 'restaurant-img'
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.src = imagesObj.largeDetails;
   image.alt = `A picture of ${restaurant.name} restaurant`;
+
+  picture.append(source1);
+  picture.append(source2);
+  picture.append(source3);
+  picture.append(image);
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
