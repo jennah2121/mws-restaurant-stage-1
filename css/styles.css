@@ -185,13 +185,18 @@ a#skip-link:focus {
   flex-direction: column;
   justify-content: space-between;
 }
-#restaurants-list .restaurant-img {
+#restaurants-list /*.restaurant-img*/ {
   background-color: #ccc;
   display: block;
   margin: 0;
   max-width: 100%;
   min-width: 100%;
 }
+
+.restaurant-img {
+  width: 100%;
+}
+
 #restaurants-list li h1 {
   color: #0472ca; 
   font-family: Arial,sans-serif;
