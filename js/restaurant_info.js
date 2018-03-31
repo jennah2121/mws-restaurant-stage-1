@@ -35,6 +35,7 @@ createObserver = () => {
  */
 initMap = (entry, observer) => {
   if (entry[0].isIntersecting) {
+    observer.unobserve(entry[0].target);
     self.map = new google.maps.Map(document.getElementById('map'), {
       zoom: 16,
       center: restaurantGlobal.latlng,
