@@ -14,6 +14,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 /**
+ * Register a service worker
+ */
+if(navigator.serviceWorker) {
+  navigator.serviceWorker.register('../sw.js').then(function(reg){
+    console.log('service worker registered');
+  }).catch(function(err){
+    console.log('service worker registration failed')
+  });
+}
+
+/**
  * Fetch all neighborhoods and set their HTML.
  */
 fetchNeighborhoods = () => {
@@ -145,7 +156,6 @@ createObserver = () => {
     threshold: 0.10
   }
   const imagesList = document.querySelectorAll('#restaurants-list li');
-  console.log('the images in their lists: ', imagesList);
   
   observer = new IntersectionObserver(lazyLoadImage, options);
   imagesList.forEach(image => {
