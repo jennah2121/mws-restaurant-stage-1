@@ -344,5 +344,11 @@ a#skip-link:focus {
     height: 100%;
     width: 100%;
   }
+}
 
+/*Required in order to lazy load google maps correctly*/
+@media only screen and (max-width: 425px) {
+  #restaurant-container {
+    min-height: 596px;
+  }
 }

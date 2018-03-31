@@ -1,24 +1,50 @@
-let restaurant;
+let restaurantGlobal, observer;
 var map;
 
 /**
- * Initialize Google map, called from HTML.
+ * Initialize the details page, called from HTML.
  */
-window.initMap = () => {
+initPage = () => {
   fetchRestaurantFromURL((error, restaurant) => {
     if (error) { // Got an error!
       console.error(error);
     } else {
-      self.map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 16,
-        center: restaurant.latlng,
-        scrollwheel: false
-      });
+      restaurantGlobal = restaurant;
       fillBreadcrumb();
-      DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
+      createObserver();
     }
   });
 }
+
+/**
+ * Create an observer to watch for when the map div is visible
+ */
+createObserver = () => {
+  let options = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.20
+  }
+  var mapDiv = document.getElementById('map');
+  observer = new IntersectionObserver(initMap, options);
+  observer.observe(mapDiv)
+}
+
+/**
+ * Initialise and show the map if mapDiv visible
+ */
+initMap = (entry, observer) => {
+  if (entry[0].isIntersecting) {
+    self.map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 16,
+      center: restaurantGlobal.latlng,
+      scrollwheel: false
+    });
+    DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
+  }
+
+}
+
 
 /**
  * Get current restaurant from page URL.
@@ -56,12 +82,12 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   address.innerHTML = restaurant.address;
 
   let imagesObj = DBHelper.imageUrlForRestaurant(restaurant);
-  
+
   const picture = document.getElementById('restaurant-img');
 
   const source1 = document.createElement('source');
   source1.setAttribute('media', '(min-width: 425px)');
-  source1.setAttribute('srcset', `${imagesObj.largeDetails} 1x, ${imagesObj.largeDetails} 2x`); 
+  source1.setAttribute('srcset', `${imagesObj.largeDetails} 1x, ${imagesObj.largeDetails} 2x`);
 
   const source2 = document.createElement('source');
   source2.setAttribute('media', '(min-width: 375px)');
@@ -161,7 +187,7 @@ createReviewHTML = (review) => {
 /**
  * Add restaurant name to the breadcrumb navigation menu
  */
-fillBreadcrumb = (restaurant=self.restaurant) => {
+fillBreadcrumb = (restaurant = self.restaurant) => {
   const breadcrumb = document.getElementById('breadcrumb');
   const li = document.createElement('li');
   li.innerHTML = restaurant.name;
