@@ -1,6 +1,3 @@
-// cache the skeleton html
-// cache the static resources
-// cache all the images 
 var staticCacheName = 'restaurant-static-v1';
 var imagesCache = 'restaurant-images';
 var allCaches = [
@@ -11,20 +8,52 @@ var allCaches = [
 /**
  * Add an install event for the service worker and cache static resources
  */
-self.addEventListener('install', function(event){
+self.addEventListener('install', function (event) {
     event.waitUntil(
-        caches.open('staticCacheName').then(function(cache){
+        caches.open('staticCacheName').then(function (cache) {
             return cache.addAll([
+                '/',
                 'index.html',
                 'css/styles.css',
                 'data/restaurants.json',
                 'js/dbhelper.js',
                 'js/main.js',
-                'js/restaurant_info.js'
+                'js/restaurant_info.js',
+                '/manifest.json'
             ])
-        }).catch(function(error){
+        }).catch(function (error) {
             console.log('An error occurred with caching')
-        })
+        }),
     );
 })
 
+/**
+ * Add a fetch event and cache any images 
+ */
+
+self.addEventListener('fetch', function (event) {
+    var url = new URL(event.request.url);
+    event.respondWith(
+        caches.match(event.request).then(function (response) {
+            return response || serveAndCache(event.request)
+        })
+    )
+})
+
+/**
+ *  Get a response from the network and cache this response
+ */
+function serveAndCache(request) {
+    var storageUrl = request.url.replace(/(\d{1})-\w+-\w{4}\.jpg/, "$1");
+
+    return caches.open(imagesCache).then(function (cache) {
+        return cache.match(storageUrl).then(function (response) {
+            if (response) return response;
+
+            return fetch(request).then(function (image) {
+                cache.put(storageUrl, image.clone());
+                return image;
+            });
+        })
+    })
+}
