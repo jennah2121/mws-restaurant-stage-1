@@ -30,8 +30,19 @@ module.exports = function (grunt) {
           {
             expand: true,
             cwd: __dirname,
-            src: ['**', '!*.html', '!**/build/**', '!**/node_modules/**', '!*.json', '!*.md', '!gruntfile.js', '!**/img/**'],
+            src: ['**', '!*.html', '!**/build/**', '!**/node_modules/**', '!*.json', '!*.md', '!gruntfile.js', '!**/img/**', 'manifest.json'],
             dest: 'build/'
+          }
+        ]
+      },
+       //Copy the icon to the images folder
+       icon: {
+        files: [
+          {
+            expand: true,
+            cwd: 'img/',
+            src: '*.png',
+            dest: 'build/images/'
           }
         ]
       }
@@ -74,7 +85,7 @@ module.exports = function (grunt) {
           expand: true,
           src: '*.jpg',
           cwd: 'img/',
-          dest: 'images/'
+          dest: 'build/images/'
         }]
       }
     }
