@@ -34,6 +34,19 @@ self.addEventListener('install', function (event) {
 
 self.addEventListener('fetch', function (event) {
     var url = new URL(event.request.url);
+
+    if(url.origin === location.origin) {
+        if(url.pathname === '/') {
+            event.respondWith(caches.match('index.html'));
+            return;
+        }
+
+        if(url.pathname.startsWith('/restaurant')) {
+            event.respondWith(caches.match('restaurant.html'));
+            return;
+        }
+    }
+
     event.respondWith(
         caches.match(event.request).then(function (response) {
             return response || serveAndCache(event.request)
