@@ -58,7 +58,7 @@ self.addEventListener('fetch', function (event) {
  *  Get a response from the network and cache this response
  */
 function serveAndCache(request) {
-    var storageUrl = request.url.replace(/(\d{1})-\w+-\w{4}\.jpg/, "$1");
+    var storageUrl = request.url.replace(/(\d{1})-\w+-\w+\.jpg/, "$1");
 
     return caches.open(imagesCache).then(function (cache) {
         return cache.match(storageUrl).then(function (response) {
