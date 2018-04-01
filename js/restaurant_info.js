@@ -1,6 +1,18 @@
 let restaurantGlobal, observer;
 var map;
 
+
+/**
+ * Register a service worker
+ */
+if(navigator.serviceWorker) {
+  navigator.serviceWorker.register('../sw.js').then(function(reg){
+    console.log('service worker registered for restaurant details page');
+  }).catch(function(err){
+    console.log('service worker registration failed for restaurant details page')
+  });
+}
+
 /**
  * Initialize the details page, called from HTML.
  */
