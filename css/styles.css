@@ -227,11 +227,9 @@ a#skip-link:focus {
   background:#f3f3f3 none repeat scroll 0 0;
   border: solid 1px lightgrey;
   border-bottom: none;
-  padding: 1%;
 }
 .inside #map {
   background-color: #ccc;
-  max-width: 90%;
   margin: auto;
 }
 .inside #footer {
@@ -329,7 +327,7 @@ a#skip-link:focus {
   }
 
   #map-container, #restaurant-container {
-    flex-basis: calc(50% - (1px + 1%)); 
+    flex-basis: calc(50% - 1px);
   }
 
   .inside #map {
