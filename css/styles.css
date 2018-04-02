@@ -53,9 +53,8 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 /* ====================== Navigation ====================== */
 nav {
   width: 100%;
-  height: 80px;
   background-color: #252831;
-  text-align:center;
+  text-align: center;
 }
 nav h1 {
   margin: auto;
@@ -222,6 +221,7 @@ a#skip-link:focus {
   top: 0;
   width: 100%;
   z-index: 1000;
+  height: 100px;
 }
 .inside #map-container {
   background:#f3f3f3 none repeat scroll 0 0;
@@ -242,7 +242,7 @@ a#skip-link:focus {
 #restaurant-name {
   color: #0472ca; 
   letter-spacing: 0;
-  margin: 15px 0 30px;
+  margin: 24px 0 30px;
   text-transform: uppercase;
   line-height: 1.1;
 }
@@ -318,7 +318,7 @@ a#skip-link:focus {
   padding: 0.5rem;
 }
 .detail {
-  margin-top: 131px;
+  margin-top: 110px;
 }
 
 @media only screen and (min-width: 700px) {
@@ -335,6 +335,12 @@ a#skip-link:focus {
   .inside #map {
     height: 100%;
     width: 100%;
+  }
+}
+
+@media only screen and (min-width: 412px) {
+  .detail {
+    margin-top: 94px;
   }
 }
 
