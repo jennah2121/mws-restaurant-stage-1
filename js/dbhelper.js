@@ -152,12 +152,12 @@ class DBHelper {
 
     //create an object which contains all the photo sizes for the restaurant id
     let imagesObj = {
-      original: `/images/${restaurant.photograph}`,
-      smallMain: `/images/${restaurant.photograph.slice(0, restaurant.photograph.indexOf('.'))}-small-main.jpg`,
-      largeMain: `/images/${restaurant.photograph.slice(0, restaurant.photograph.indexOf('.'))}-large-main.jpg`,
-      smallDetails: `/images/${restaurant.photograph.slice(0, restaurant.photograph.indexOf('.'))}-small-details.jpg`,
-      medDetails: `/images/${restaurant.photograph.slice(0, restaurant.photograph.indexOf('.'))}-med-details.jpg`,
-      largeDetails: `/images/${restaurant.photograph.slice(0, restaurant.photograph.indexOf('.'))}-large-details.jpg`,
+      original: `/images/${restaurant.photograph}.jpg`,
+      smallMain: `/images/${restaurant.photograph}-small-main.jpg`,
+      largeMain: `/images/${restaurant.photograph}-large-main.jpg`,
+      smallDetails: `/images/${restaurant.photograph}-small-details.jpg`,
+      medDetails: `/images/${restaurant.photograph}-med-details.jpg`,
+      largeDetails: `/images/${restaurant.photograph}-large-details.jpg`,
     }
 
    return imagesObj;
