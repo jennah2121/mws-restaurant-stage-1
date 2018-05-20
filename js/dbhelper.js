@@ -149,6 +149,10 @@ class DBHelper {
    * Restaurant image URL.
    */
   static imageUrlForRestaurant(restaurant) {
+  
+    if(!restaurant.photograph) {
+      restaurant.photograph = restaurant.id;
+    }
 
     //create an object which contains all the photo sizes for the restaurant id
     let imagesObj = {
