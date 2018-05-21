@@ -9,7 +9,7 @@ module.exports = function (grunt) {
           {
             expand: true,
             cwd: __dirname,
-            src: ['**', '!*.html', '!**/build/**', '!**/node_modules/**', '!*.json', '!*.md', '!gruntfile.js', '!**/img/**', 'manifest.json'],
+            src: ['**', '!**/build/**', '!**/node_modules/**', '!*.json', '!*.md', '!gruntfile.js', '!**/img/**', 'manifest.json', '!**/data/**'],
             dest: 'build/'
           }
         ]
