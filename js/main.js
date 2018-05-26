@@ -1,14 +1,11 @@
-let restaurants,
-  neighborhoods,
-  cuisines,
-  observer
-var map
-var markers = []
+let restaurants, neighborhoods, cuisines, observer;
+var map;
+var markers = [];
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', event => {
   fetchNeighborhoods();
   fetchCuisines();
 });
@@ -16,12 +13,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
 /**
  * Register a service worker
  */
-if(navigator.serviceWorker) {
-  navigator.serviceWorker.register('../sw.js').then(function(reg){
-    console.log('service worker registered');
-  }).catch(function(err){
-    console.log('service worker registration failed')
-  });
+if (navigator.serviceWorker) {
+  navigator.serviceWorker
+    .register('../sw.js')
+    .then(function(reg) {
+      console.log('service worker registered');
+    })
+    .catch(function(err) {
+      console.log('service worker registration failed');
+    });
 }
 
 /**
@@ -29,14 +29,15 @@ if(navigator.serviceWorker) {
  */
 fetchNeighborhoods = () => {
   DBHelper.fetchNeighborhoods((error, neighborhoods) => {
-    if (error) { // Got an error
+    if (error) {
+      // Got an error
       console.error(error);
     } else {
       self.neighborhoods = neighborhoods;
       fillNeighborhoodsHTML();
     }
   });
-}
+};
 
 /**
  * Set neighborhoods HTML.
@@ -49,21 +50,22 @@ fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
     option.value = neighborhood;
     select.append(option);
   });
-}
+};
 
 /**
  * Fetch all cuisines and set their HTML.
  */
 fetchCuisines = () => {
   DBHelper.fetchCuisines((error, cuisines) => {
-    if (error) { // Got an error!
+    if (error) {
+      // Got an error!
       console.error(error);
     } else {
       self.cuisines = cuisines;
       fillCuisinesHTML();
     }
   });
-}
+};
 
 /**
  * Set cuisines HTML.
@@ -77,7 +79,7 @@ fillCuisinesHTML = (cuisines = self.cuisines) => {
     option.value = cuisine;
     select.append(option);
   });
-}
+};
 
 /**
  * Initialize Google map, called from HTML.
@@ -93,7 +95,7 @@ window.initMap = () => {
     scrollwheel: false
   });
   updateRestaurants();
-}
+};
 
 /**
  * Update page and map for current restaurants.
@@ -108,20 +110,25 @@ updateRestaurants = () => {
   const cuisine = cSelect[cIndex].value;
   const neighborhood = nSelect[nIndex].value;
 
-  DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, (error, restaurants) => {
-    if (error) { // Got an error!
-      console.error(error);
-    } else {
-      resetRestaurants(restaurants);
-      fillRestaurantsHTML();
+  DBHelper.fetchRestaurantByCuisineAndNeighborhood(
+    cuisine,
+    neighborhood,
+    (error, restaurants) => {
+      if (error) {
+        // Got an error!
+        console.error(error);
+      } else {
+        resetRestaurants(restaurants);
+        fillRestaurantsHTML();
+      }
     }
-  })
-}
+  );
+};
 
 /**
  * Clear current restaurants, their HTML and remove their map markers.
  */
-resetRestaurants = (restaurants) => {
+resetRestaurants = restaurants => {
   // Remove all restaurants
   self.restaurants = [];
   const ul = document.getElementById('restaurants-list');
@@ -131,7 +138,7 @@ resetRestaurants = (restaurants) => {
   self.markers.forEach(m => m.setMap(null));
   self.markers = [];
   self.restaurants = restaurants;
-}
+};
 
 /**
  * Create all restaurants HTML and add them to the webpage.
@@ -143,8 +150,7 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
   });
   addMarkersToMap();
   createObserver();
-}
-
+};
 
 /**
  * Create an observer to watch for when li's become visible
@@ -153,22 +159,22 @@ createObserver = () => {
   const options = {
     root: null,
     rootMargin: '0px',
-    threshold: 0.10
-  }
+    threshold: 0.1
+  };
   const imagesList = document.querySelectorAll('#restaurants-list li');
-  
+
   observer = new IntersectionObserver(lazyLoadImage, options);
   imagesList.forEach(image => {
-    observer.observe(image)
+    observer.observe(image);
   });
-}
+};
 
 /**
- * Load images only when they become visible 
+ * Load images only when they become visible
  */
-lazyLoadImage = (entries) => {
+lazyLoadImage = entries => {
   entries.forEach(entry => {
-    if(entry.isIntersecting) {
+    if (entry.isIntersecting) {
       let source1 = entry.target.firstChild.firstChild;
       let source2 = source1.nextSibling;
       let image = source2.nextSibling;
@@ -180,27 +186,32 @@ lazyLoadImage = (entries) => {
       source1.setAttribute('srcset', `${source1.getAttribute('data-srcset')}`);
       source2.setAttribute('srcset', `${source2.getAttribute('data-srcset')}`);
       image.setAttribute('src', `${image.getAttribute('data-src')}`);
-
     }
-  })
-}
+  });
+};
 
 /**
  * Create restaurant HTML.
  */
-createRestaurantHTML = (restaurant) => {
+createRestaurantHTML = restaurant => {
   let imagesObj = DBHelper.imageUrlForRestaurant(restaurant);
-  
+
   const li = document.createElement('li');
   const picture = document.createElement('picture');
 
   const source1 = document.createElement('source');
   source1.setAttribute('media', '(min-width: 321px)');
-  source1.setAttribute('data-srcset', `${imagesObj.largeMain} 1x, ${imagesObj.largeMain} 2x`) 
+  source1.setAttribute(
+    'data-srcset',
+    `${imagesObj.largeMain} 1x, ${imagesObj.largeMain} 2x`
+  );
 
   const source2 = document.createElement('source');
   source2.setAttribute('media', '(min-width: 0px)');
-  source2.setAttribute('data-srcset', `${imagesObj.smallMain} 1x, ${imagesObj.smallMain} 2x`)
+  source2.setAttribute(
+    'data-srcset',
+    `${imagesObj.smallMain} 1x, ${imagesObj.smallMain} 2x`
+  );
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
@@ -228,10 +239,10 @@ createRestaurantHTML = (restaurant) => {
   const more = document.createElement('a');
   more.innerHTML = 'View Details';
   more.href = DBHelper.urlForRestaurant(restaurant);
-  li.append(more)
+  li.append(more);
 
-  return li
-}
+  return li;
+};
 
 /**
  * Add markers for current restaurants to the map.
@@ -241,8 +252,8 @@ addMarkersToMap = (restaurants = self.restaurants) => {
     // Add marker to the map
     const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.map);
     google.maps.event.addListener(marker, 'click', () => {
-      window.location.href = marker.url
+      window.location.href = marker.url;
     });
     self.markers.push(marker);
   });
-}
+};
