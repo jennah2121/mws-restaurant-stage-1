@@ -76,3 +76,6 @@ typings/
 
 # Contains files that hold the API keys instead of placeholder text
 build/
+
+#vs code files
+.vscode/
