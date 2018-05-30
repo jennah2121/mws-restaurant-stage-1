@@ -1,4 +1,4 @@
-module.exports = function (grunt) {
+module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     //Configure grunt-contrib-copy
@@ -9,13 +9,23 @@ module.exports = function (grunt) {
           {
             expand: true,
             cwd: __dirname,
-            src: ['**', '!**/build/**', '!**/node_modules/**', '!*.json', '!*.md', '!gruntfile.js', '!**/img/**', 'manifest.json', '!**/data/**'],
+            src: [
+              '**',
+              '!**/build/**',
+              '!**/node_modules/**',
+              '!*.json',
+              '!*.md',
+              '!gruntfile.js',
+              '!**/img/**',
+              'manifest.json',
+              '!**/data/**'
+            ],
             dest: 'build/'
           }
         ]
       },
-       //Copy the icon to the images folder
-       icon: {
+      //Copy the icon to the images folder
+      icon: {
         files: [
           {
             expand: true,
@@ -46,32 +56,32 @@ module.exports = function (grunt) {
             {
               name: 'small-details',
               width: 288,
-              quality: 50,
+              quality: 50
             },
             {
               name: 'med-details',
               width: 337,
-              quality: 50,
+              quality: 50
             },
             {
               name: 'large-details',
               width: 425,
-              quality: 100,
+              quality: 100
             }
           ]
         },
-        files: [{
-          expand: true,
-          src: '*.jpg',
-          cwd: 'img/',
-          dest: 'build/images/'
-        }]
+        files: [
+          {
+            expand: true,
+            src: '*.jpg',
+            cwd: 'img/',
+            dest: 'build/images/'
+          }
+        ]
       }
     }
-
   });
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-responsive-images');
   grunt.registerTask('default', ['responsive_images', 'copy']);
-}
-
+};
