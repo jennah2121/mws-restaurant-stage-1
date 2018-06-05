@@ -1,6 +1,7 @@
 let restaurantGlobal, observer;
 var map;
 
+const DBHelper = require('./dbhelper.js');
 /**
  * Register a service worker
  */

@@ -10,6 +10,10 @@ module.exports = function(grunt) {
       main: {
         src: 'js/main.js',
         dest: 'build/js/main.js'
+      },
+      restaurants: {
+        src: 'js/restaurant_info.js',
+        dest: 'build/js/restaurant_info.js'
       }
     },
     //Configure grunt-contrib-copy
