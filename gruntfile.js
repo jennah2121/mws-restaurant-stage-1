@@ -1,6 +1,17 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    //Configure grunt-browserify
+    browserify: {
+      helper: {
+        src: 'js/dbhelper.js',
+        dest: 'build/js/dbhelper.js'
+      },
+      main: {
+        src: 'js/main.js',
+        dest: 'build/js/main.js'
+      }
+    },
     //Configure grunt-contrib-copy
     copy: {
       build: {
@@ -18,7 +29,8 @@ module.exports = function(grunt) {
               '!gruntfile.js',
               '!**/img/**',
               'manifest.json',
-              '!**/data/**'
+              '!**/data/**',
+              '!dbhlper.js'
             ],
             dest: 'build/'
           }
@@ -81,7 +93,8 @@ module.exports = function(grunt) {
       }
     }
   });
+  grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-responsive-images');
-  grunt.registerTask('default', ['responsive_images', 'copy']);
+  grunt.registerTask('default', ['responsive_images', 'copy', 'browserify']);
 };
