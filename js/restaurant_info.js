@@ -1,5 +1,4 @@
-let restaurantGlobal, observer;
-var map;
+let restaurantGlobal, observer, map;
 
 const DBHelper = require('./dbhelper.js');
 /**
