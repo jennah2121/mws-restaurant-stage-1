@@ -1,7 +1,9 @@
+// const idb = require("idb");
+
 /**
  * Common database helper functions.
  */
-class DBHelper {
+module.exports = class DBHelper {
   /**
    * Database URL.
    * Change this to restaurants.json file location on your server.
@@ -194,4 +196,4 @@ class DBHelper {
     });
     return marker;
   }
-}
+};

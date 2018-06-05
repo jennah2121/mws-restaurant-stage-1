@@ -1,6 +1,11 @@
-let restaurants, neighborhoods, cuisines, observer;
-var map;
-var markers = [];
+let restaurants,
+  neighborhoods,
+  cuisines,
+  observer,
+  map,
+  markers = [];
+
+const DBHelper = require('./dbhelper.js');
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
