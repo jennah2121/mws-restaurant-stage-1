@@ -1,19 +1,22 @@
 {
   "name": "mws-restaurant-stage-1",
   "version": "1.0.0",
-  "description":
-    "A web app that allows users to view restaurants and their reviews. Part of Udacity's Mobile Web Scholarship",
+  "description": "A web app that allows users to view restaurants and their reviews. Part of Udacity's Mobile Web Scholarship",
   "main": "dbhelper",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-   
     "build": "babel ./build -d ./build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jennah2121/mws-restaurant-stage-1.git"
   },
-  "keywords": ["restaurants", "reviews", "udacity", "mobile-web"],
+  "keywords": [
+    "restaurants",
+    "reviews",
+    "udacity",
+    "mobile-web"
+  ],
   "author": "Jennah2121",
   "license": "ISC",
   "bugs": {
@@ -32,6 +35,7 @@
     "grunt-browserify": "^5.3.0",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-replace": "^1.0.1",
-    "grunt-responsive-images": "^1.10.1"
+    "grunt-responsive-images": "^1.10.1",
+    "idb": "^2.1.2"
   }
 }
