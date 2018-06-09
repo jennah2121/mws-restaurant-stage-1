@@ -1,4 +1,4 @@
-// const idb = require("idb");
+const idb = require('idb');
 
 /**
  * Common database helper functions.
