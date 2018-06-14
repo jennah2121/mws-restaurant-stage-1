@@ -1,5 +1,11 @@
 const idb = require('idb');
 
+const dbPromise = idb.open('restaurantsDB', 1, upgradeDB => {
+  upgradeDB.createObjectStore('restaurants', {
+    keyPath: 'id'
+  });
+});
+
 /**
  * Common database helper functions.
  */
@@ -17,20 +23,47 @@ module.exports = class DBHelper {
    * Fetch all restaurants.
    */
   static fetchRestaurants(callback) {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', DBHelper.DATABASE_URL);
-    xhr.onload = () => {
-      if (xhr.status === 200) {
-        // Got a success response from server!
-        const restaurants = JSON.parse(xhr.responseText);
-        callback(null, restaurants);
-      } else {
-        // Oops!. Got an error from server.
-        const error = `Request failed. Returned status of ${xhr.status}`;
-        callback(error, null);
-      }
-    };
-    xhr.send();
+    dbPromise
+      .then(db => {
+        if (!db) {
+          console.log('no db was created');
+          return;
+        }
+        return db;
+      })
+      .then(db => {
+        return db
+          .transaction('restaurants')
+          .objectStore('restaurants')
+          .getAll();
+      })
+      .then(data => {
+        if (data.length === 0) {
+          // Fetch the data from the server and add it to db
+          return fetch(DBHelper.DATABASE_URL)
+            .then(response => {
+              if (response.status !== 200) {
+                console.log('error');
+              }
+              return response.json();
+            })
+            .then(fetchedData => {
+              dbPromise.then(db => db).then(db => {
+                let tx = db.transaction('restaurants', 'readwrite');
+                let store = tx.objectStore('restaurants');
+                fetchedData.forEach(restaurant => {
+                  store.put(restaurant);
+                });
+              });
+              console.log('after add to db: ', fetchedData);
+              callback(null, fetchedData);
+            });
+        } else {
+          //return all the data in the database
+          console.log('serving from idb');
+          callback(null, data);
+        }
+      });
   }
 
   /**
