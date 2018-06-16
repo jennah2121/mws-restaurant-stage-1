@@ -72,7 +72,7 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
+*.env
 
 # Contains files that hold the API keys instead of placeholder text
 build/

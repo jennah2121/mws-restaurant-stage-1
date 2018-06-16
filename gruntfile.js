@@ -1,3 +1,5 @@
+require('env2')('./config.env');
+
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -14,6 +16,28 @@ module.exports = function(grunt) {
       restaurants: {
         src: 'js/restaurant_info.js',
         dest: 'build/js/restaurant_info.js'
+      }
+    },
+    // Configure grunt-replace
+    replace: {
+      dist: {
+        options: {
+          patterns: [
+            {
+              match: '<your MAPBOX API KEY HERE>',
+              replacement: process.env.MAP_TOKEN
+            }
+          ]
+        },
+        files: [
+          {
+            expand: true,
+            flatten: true,
+            cwd: __dirname,
+            src: ['build/js/main.js', 'build/js/restaurant_info.js'],
+            dest: 'build/js'
+          }
+        ]
       }
     },
     //Configure grunt-contrib-copy
@@ -97,8 +121,15 @@ module.exports = function(grunt) {
       }
     }
   });
+
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-responsive-images');
-  grunt.registerTask('default', ['responsive_images', 'copy', 'browserify']);
+  grunt.loadNpmTasks('grunt-replace');
+  grunt.registerTask('default', [
+    'responsive_images',
+    'copy',
+    'browserify',
+    'replace'
+  ]);
 };
