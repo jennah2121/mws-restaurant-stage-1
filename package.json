@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/jennah2121/mws-restaurant-stage-1#readme",
   "dependencies": {
+    "env2": "^2.2.2",
     "npm": "^5.10.0"
   },
   "devDependencies": {
