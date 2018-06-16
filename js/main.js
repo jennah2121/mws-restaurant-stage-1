@@ -2,7 +2,6 @@ let restaurants,
   neighborhoods,
   cuisines,
   observer,
-  map,
   newMap,
   markers = [];
 
@@ -92,7 +91,7 @@ fillCuisinesHTML = (cuisines = self.cuisines) => {
  * Initialize leaflet map, called from HTML.
  */
 initMap = () => {
-  self.newMap = L.map('map', {
+  newMap = L.map('map', {
     center: [40.722216, -73.987501],
     zoom: 12,
     scrollWheelZoom: false
@@ -280,7 +279,7 @@ createRestaurantHTML = restaurant => {
 addMarkersToMap = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
     // Add marker to the map
-    const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.newMap);
+    const marker = DBHelper.mapMarkerForRestaurant(restaurant, newMap);
     marker.on('click', onClick);
     function onClick() {
       window.location.href = marker.options.url;

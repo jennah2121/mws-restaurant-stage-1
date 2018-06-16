@@ -1,4 +1,4 @@
-let restaurantGlobal, observer, map, restaurant, newMap;
+let restaurantGlobal, observer, restaurant, newMap;
 
 const DBHelper = require('./dbhelper.js');
 
@@ -55,8 +55,8 @@ createObserver = () => {
 myInitMap = (entry, observer) => {
   if (entry[0].isIntersecting) {
     observer.unobserve(entry[0].target);
-    self.newMap = L.map('map', {
-      center: [restaurant.latlng.lat, restaurant.latlng.lng],
+    newMap = L.map('map', {
+      center: [restaurantGlobal.latlng.lat, restaurantGlobal.latlng.lng],
       zoom: 16,
       scrollWheelZoom: false
     });
@@ -73,7 +73,7 @@ myInitMap = (entry, observer) => {
       }
     ).addTo(newMap);
     fillBreadcrumb();
-    DBHelper.mapMarkerForRestaurant(self.restaurant, self.newMap);
+    DBHelper.mapMarkerForRestaurant(restaurantGlobal, newMap);
   }
 };
 

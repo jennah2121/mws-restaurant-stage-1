@@ -1,4 +1,5 @@
-const idb = require('idb');
+// const idb = require('idb');
+console.log('the window is: ', window);
 
 /**
  * Common database helper functions.
@@ -196,7 +197,7 @@ module.exports = class DBHelper {
         url: DBHelper.urlForRestaurant(restaurant)
       }
     );
-    marker.addTo(newMap);
+    marker.addTo(map);
     return marker;
   }
   /* static mapMarkerForRestaurant(restaurant, map) {
