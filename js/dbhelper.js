@@ -1,5 +1,4 @@
-// const idb = require('idb');
-console.log('the window is: ', window);
+const idb = require('idb');
 
 const dbPromise = idb.open('restaurantsDB', 1, upgradeDB => {
   upgradeDB.createObjectStore('restaurants', {
