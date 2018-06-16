@@ -1,6 +1,7 @@
-let restaurantGlobal, observer, map;
+let restaurantGlobal, observer, map, restaurant, newMap;
 
 const DBHelper = require('./dbhelper.js');
+
 /**
  * Register a service worker
  */
@@ -20,7 +21,8 @@ if (navigator.serviceWorker) {
 /**
  * Initialize the details page, called from HTML.
  */
-initPage = () => {
+document.addEventListener('DOMContentLoaded', event => {
+  // myInitMap();
   fetchRestaurantFromURL((error, restaurant) => {
     if (error) {
       // Got an error!
@@ -31,7 +33,7 @@ initPage = () => {
       createObserver();
     }
   });
-};
+});
 
 /**
  * Create an observer to watch for when the map div is visible
@@ -43,23 +45,81 @@ createObserver = () => {
     threshold: 0.2
   };
   var mapDiv = document.getElementById('map');
-  observer = new IntersectionObserver(initMap, options);
+  observer = new IntersectionObserver(myInitMap, options);
   observer.observe(mapDiv);
 };
 
 /**
  * Initialise and show the map if mapDiv visible
  */
-initMap = (entry, observer) => {
+myInitMap = (entry, observer) => {
   if (entry[0].isIntersecting) {
     observer.unobserve(entry[0].target);
-    self.map = new google.maps.Map(document.getElementById('map'), {
+    self.newMap = L.map('map', {
+      center: [restaurant.latlng.lat, restaurant.latlng.lng],
       zoom: 16,
-      center: restaurantGlobal.latlng,
-      scrollwheel: false
+      scrollWheelZoom: false
     });
-    DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
+    L.tileLayer(
+      'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}',
+      {
+        mapboxToken: '<your MAPBOX API KEY HERE>',
+        maxZoom: 18,
+        attribution:
+          'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+          '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+          'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        id: 'mapbox.streets'
+      }
+    ).addTo(newMap);
+    fillBreadcrumb();
+    DBHelper.mapMarkerForRestaurant(self.restaurant, self.newMap);
   }
+};
+
+/**
+ * Initialize leaflet map
+ */
+// initMap = () => {
+//   fetchRestaurantFromURL((error, restaurant) => {
+//     if (error) {
+//       // Got an error!
+//       console.error(error);
+//     } else {
+//       self.newMap = L.map('map', {
+//         center: [restaurant.latlng.lat, restaurant.latlng.lng],
+//         zoom: 16,
+//         scrollWheelZoom: false
+//       });
+//       L.tileLayer(
+//         'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}',
+//         {
+//           mapboxToken: '<your MAPBOX API KEY HERE>',
+//           maxZoom: 18,
+//           attribution:
+//             'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+//             '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+//             'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+//           id: 'mapbox.streets'
+//         }
+//       ).addTo(newMap);
+//       fillBreadcrumb();
+//       DBHelper.mapMarkerForRestaurant(self.restaurant, self.newMap);
+//     }
+//   });
+// };
+
+/* window.initMap = () => {
+  fetchRestaurantFromURL((error, restaurant) => {
+    if (error) {
+      // Got an error!
+      console.error(error);
+    } else {
+      restaurantGlobal = restaurant;
+      fillBreadcrumb();
+      createObserver();
+    }
+  });
 };
 
 /**
