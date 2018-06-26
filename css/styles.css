@@ -146,7 +146,7 @@ a#skip-link:focus {
 #map {
   height: 50vh;
   width: 100vw;
-  background-color: #f3f3f3;
+  background-color: #ffffff;
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -203,7 +203,7 @@ a#skip-link:focus {
 
 /* ====================== Restaurant Listing ====================== */
 #restaurants-list {
-  background-color: #f3f3f3;
+  background-color: #ffffff;
   list-style: outside none none;
   margin: 0;
   padding: 1rem 1.4rem;
