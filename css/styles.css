@@ -58,7 +58,7 @@ section {
   display: block;
 }
 #maincontent {
-  background-color: #f3f3f3;
+  background-color: white;
   min-height: 100%;
   display: flex;
   flex-direction: column;
@@ -268,6 +268,7 @@ a#skip-link:focus {
   width: 100%;
   z-index: 2000;
 }
+
 .inside #map-container {
   background: #f3f3f3 none repeat scroll 0 0;
 }
@@ -327,7 +328,7 @@ a#skip-link:focus {
   padding: 0px 2rem;
 }
 #reviews-list li {
-  background-color: #fff;
+  background-color: #f6fcff;
   border: 2px solid #f3f3f3;
   border-left: 3px solid #0472ca;
   display: block;
