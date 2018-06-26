@@ -267,7 +267,6 @@ a#skip-link:focus {
   top: 0;
   width: 100%;
   z-index: 2000;
-  height: 100px;
 }
 .inside #map-container {
   background: #f3f3f3 none repeat scroll 0 0;
@@ -362,9 +361,6 @@ a#skip-link:focus {
   color: #666;
   padding: 0.5rem;
 }
-.detail {
-  margin-top: 110px;
-}
 
 @media only screen and (min-width: 700px) {
   #maincontent {
@@ -380,12 +376,6 @@ a#skip-link:focus {
   .inside #map {
     height: 100%;
     width: 100%;
-  }
-}
-
-@media only screen and (min-width: 412px) {
-  .detail {
-    margin-top: 94px;
   }
 }
 

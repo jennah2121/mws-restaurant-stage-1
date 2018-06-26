@@ -22,7 +22,9 @@ if (navigator.serviceWorker) {
  * Initialize the details page, called from HTML.
  */
 document.addEventListener('DOMContentLoaded', event => {
-  // myInitMap();
+  // Dynamically adjusts the margin for maincontent
+  adjustMaincontentMargin();
+
   fetchRestaurantFromURL((error, restaurant) => {
     if (error) {
       // Got an error!
@@ -295,3 +297,19 @@ getParameterByName = (name, url) => {
   if (!results[2]) return '';
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 };
+
+/**
+ * Dynamically adjust the margin for maincontent based on header height
+ */
+adjustMaincontentMargin = () => {
+  let headerHeight = document.querySelector('header').offsetHeight;
+  document.querySelector('.detail').style.marginTop = headerHeight + 'px';
+};
+
+window.addEventListener('resize', () => {
+  if (window.innerHeight >= 417) {
+    adjustMaincontentMargin();
+  } else {
+    document.querySelector('.detail').style.marginTop = 95 + 'px';
+  }
+});
