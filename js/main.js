@@ -11,7 +11,7 @@ const DBHelper = require('./dbhelper.js');
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', event => {
-  initMap(); // added
+  updateRestaurants();
   fetchNeighborhoods();
   fetchCuisines();
 });
@@ -88,6 +88,13 @@ fillCuisinesHTML = (cuisines = self.cuisines) => {
 };
 
 /**
+ * Initialise map if the user requests the map
+ */
+document.querySelector('#map').addEventListener('click', () => {
+  if (newMap === undefined) initMap();
+});
+
+/**
  * Initialize leaflet map, called from HTML.
  */
 initMap = () => {
@@ -110,7 +117,14 @@ initMap = () => {
   ).addTo(newMap);
 
   updateRestaurants();
+
+  // Hide map load text for screen-readers
+  document.querySelector('.load-text').setAttribute('aria-hidden', 'true');
+
+  // Change map cursor after intialisation
+  document.querySelector('#map').style.cursor = '-webkit-grab';
 };
+
 /* window.initMap = () => {
   let loc = {
     lat: 40.722216,
@@ -177,7 +191,7 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
     ul.append(createRestaurantHTML(restaurant));
   });
-  addMarkersToMap();
+  if (newMap !== undefined) addMarkersToMap();
   createObserver();
 };
 

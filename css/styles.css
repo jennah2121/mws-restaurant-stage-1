@@ -146,7 +146,30 @@ a#skip-link:focus {
 #map {
   height: 50vh;
   width: 100vw;
-  background-color: #ccc;
+  background-color: #f3f3f3;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.load-text {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-align: center;
+  font-weight: 300;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.map-placeholder-img {
+  width: 50%;
+  text-align: center;
+  margin: 0 auto;
+  max-width: 188px;
+  display: block;
 }
 /* ====================== Restaurant Filtering ====================== */
 .filter-options {
