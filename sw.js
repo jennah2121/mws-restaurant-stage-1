@@ -8,7 +8,7 @@ var allCaches = [staticCacheName, imagesCache];
 self.addEventListener('install', function(event) {
   event.waitUntil(
     caches
-      .open('staticCacheName')
+      .open(staticCacheName)
       .then(function(cache) {
         return cache.addAll([
           '/',
@@ -70,3 +70,21 @@ function serveAndCache(request) {
     });
   });
 }
+
+/**
+ * Add and activate event listener and delete old caches
+ */
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames
+          .filter(
+            cache =>
+              cache.startsWith('restaurant-') && !allCaches.includes(cache)
+          )
+          .map(oldCache => caches.delete(oldCache))
+      );
+    })
+  );
+});
