@@ -76,15 +76,18 @@ function serveAndCache(request) {
  */
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames
-          .filter(
-            cache =>
-              cache.startsWith('restaurant-') && !allCaches.includes(cache)
-          )
-          .map(oldCache => caches.delete(oldCache))
-      );
-    })
+    caches
+      .keys()
+      .then(cacheNames => {
+        return Promise.all(
+          cacheNames
+            .filter(
+              cache =>
+                cache.startsWith('restaurant-') && !allCaches.includes(cache)
+            )
+            .map(oldCache => caches.delete(oldCache))
+        );
+      })
+      .then(() => self.clients.claim())
   );
 });
