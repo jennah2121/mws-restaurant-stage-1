@@ -254,9 +254,20 @@ createRestaurantHTML = restaurant => {
   picture.append(image);
   li.append(picture);
 
+  const container = document.createElement('div');
+  container.classList.add('restaurant-text-container');
+
   const name = document.createElement('h2');
   name.innerHTML = restaurant.name;
-  li.append(name);
+  container.append(name);
+
+  const fave = document.createElement('button');
+  fave.innerHTML = '★';
+  fave.setAttribute('aria-label', 'Add as favourite');
+  fave.classList.add('favourite-button');
+  container.append(fave);
+
+  li.append(container);
 
   const neighborhood = document.createElement('p');
   neighborhood.innerHTML = restaurant.neighborhood;
