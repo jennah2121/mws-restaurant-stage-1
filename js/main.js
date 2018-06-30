@@ -265,6 +265,9 @@ createRestaurantHTML = restaurant => {
   fave.innerHTML = '★';
   fave.setAttribute('aria-label', 'Add as favourite');
   fave.classList.add('favourite-button');
+  fave.addEventListener('click', event => {
+    markAsFavourite(event);
+  });
   container.append(fave);
 
   li.append(container);
@@ -299,4 +302,11 @@ addMarkersToMap = (restaurants = self.restaurants) => {
     }
     self.markers.push(marker);
   });
+};
+
+/**
+ * Mark a restaurant as a favourite
+ */
+markAsFavourite = event => {
+  event.target.classList.toggle('favourited');
 };
