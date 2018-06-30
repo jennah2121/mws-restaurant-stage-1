@@ -1,11 +1,11 @@
-var staticCacheName = 'restaurant-static-v1';
-var imagesCache = 'restaurant-images';
-var allCaches = [staticCacheName, imagesCache];
+let staticCacheName = 'restaurant-static-v1';
+let imagesCache = 'restaurant-images';
+let allCaches = [staticCacheName, imagesCache];
 
 /**
  * Add an install event for the service worker and cache static resources
  */
-self.addEventListener('install', function(event) {
+self.addEventListener('install', event => {
   event.waitUntil(
     caches
       .open(staticCacheName)
@@ -18,7 +18,8 @@ self.addEventListener('install', function(event) {
           'js/dbhelper.js',
           'js/main.js',
           'js/restaurant_info.js',
-          '/manifest.json'
+          '/manifest.json',
+          'images/RR-not-found.webp'
         ]);
       })
       .catch(function(error) {
@@ -31,8 +32,8 @@ self.addEventListener('install', function(event) {
  * Add a fetch event and cache any images
  */
 
-self.addEventListener('fetch', function(event) {
-  var url = new URL(event.request.url);
+self.addEventListener('fetch', event => {
+  const url = new URL(event.request.url);
 
   if (url.origin === location.origin) {
     if (url.pathname === '/') {
@@ -47,9 +48,9 @@ self.addEventListener('fetch', function(event) {
   }
 
   event.respondWith(
-    caches.match(event.request).then(function(response) {
-      return response || serveAndCache(event.request);
-    })
+    caches
+      .match(event.request)
+      .then(response => response || serveAndCache(event.request))
   );
 });
 
@@ -57,16 +58,24 @@ self.addEventListener('fetch', function(event) {
  *  Get a response from the network and cache this response
  */
 function serveAndCache(request) {
-  var storageUrl = request.url.replace(/(\d{1})-\w+-\w+\.jpg/, '$1');
+  let storageUrl = request.url.replace(/(\d{1})-\w+-\w+\.jpg/, '$1');
 
-  return caches.open(imagesCache).then(function(cache) {
-    return cache.match(storageUrl).then(function(response) {
+  return caches.open(imagesCache).then(cache => {
+    return cache.match(storageUrl).then(response => {
       if (response) return response;
 
-      return fetch(request).then(function(image) {
-        cache.put(storageUrl, image.clone());
-        return image;
-      });
+      return fetch(request)
+        .then(image => {
+          cache.put(storageUrl, image.clone());
+          return image;
+        })
+        .catch(() => {
+          return caches
+            .open(staticCacheName)
+            .then(cache =>
+              cache.match('images/RR-not-found.webp').then(response => response)
+            );
+        });
     });
   });
 }
