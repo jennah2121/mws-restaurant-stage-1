@@ -113,6 +113,14 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const name = document.getElementById('restaurant-name');
   name.innerHTML = restaurant.name;
 
+  const fave = document.getElementById('restaurant-fave-btn');
+  fave.innerHTML = '★';
+  fave.setAttribute('data-rid', restaurant.id);
+  fave.addEventListener('click', event => {
+    markAsFavourite(event);
+  });
+  if (restaurant.is_favorite) fave.classList.add('favourited');
+
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
 
@@ -268,3 +276,13 @@ window.addEventListener('resize', () => {
     document.querySelector('.detail').style.marginTop = 95 + 'px';
   }
 });
+
+/**
+ * Mark a restaurant as a favourite in db
+ * if successsful css updated
+ */
+markAsFavourite = event => {
+  event.target.classList.toggle('favourited');
+  const id = event.target.getAttribute('data-rid');
+  DBHelper.markFavourite(id);
+};

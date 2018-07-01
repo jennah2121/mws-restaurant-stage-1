@@ -275,6 +275,7 @@ a#skip-link:focus {
   border-radius: 50%;
   background-color: #9e9e9e;
   color: #fbfbfd;
+  cursor: pointer;
 }
 
 .favourite-button:hover {
@@ -307,10 +308,21 @@ a#skip-link:focus {
   position: absolute;
   width: 100%;
 }
+
+.inside .restaurant-text-container {
+  justify-content: flex-end;
+  width: 90%;
+  max-width: 425px;
+}
+
+.inside .favourite-button {
+  align-self: center;
+}
+
 #restaurant-name {
   color: #0472ca;
   letter-spacing: 0;
-  margin: 24px 0 30px;
+  margin: 24px auto 30px;
   text-transform: uppercase;
   line-height: 1.1;
 }
