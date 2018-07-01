@@ -201,6 +201,12 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   title.innerHTML = 'Reviews';
   container.appendChild(title);
 
+  const addReviewBtn = document.createElement('button');
+  addReviewBtn.innerHTML = 'Write Review';
+  addReviewBtn.classList.add('add-review');
+  addReviewBtn.addEventListener('click', createFormHTML);
+  container.appendChild(addReviewBtn);
+
   if (!reviews) {
     const noReviews = document.createElement('p');
     noReviews.innerHTML = 'No reviews yet!';
@@ -236,6 +242,91 @@ createReviewHTML = review => {
   li.appendChild(comments);
 
   return li;
+};
+
+/**
+ * Create a form and it to the webpage
+ */
+createFormHTML = () => {
+  const formExists = document.getElementById('form-reviews');
+
+  if (formExists) {
+    formExists.classList.toggle('hidden');
+  } else {
+    const container = document.getElementById('reviews-container');
+    const form = document.createElement('form');
+    form.classList.add('review-form');
+    form.setAttribute('id', 'form-reviews');
+
+    //create title for form
+    const formTitle = document.createElement('h4');
+    formTitle.innerHTML = 'Add a Review';
+    formTitle.classList.add('review-form-title');
+    form.appendChild(formTitle);
+
+    // create a name input field with a label
+    const labelName = document.createElement('label');
+    labelName.setAttribute('for', 'name');
+    labelName.innerHTML = 'Name:';
+    const nameInput = document.createElement('input');
+    nameInput.setAttribute('id', 'name');
+    nameInput.setAttribute('type', 'text');
+    nameInput.setAttribute('name', 'username');
+    nameInput.setAttribute('placeholder', 'Enter your name');
+    form.appendChild(labelName);
+    form.appendChild(nameInput);
+
+    //create a rating input field with a label
+    const labelRating = document.createElement('label');
+    labelRating.setAttribute('for', 'rating');
+    labelRating.innerHTML = 'Rating:';
+    const ratingInput = document.createElement('input');
+    ratingInput.setAttribute('id', 'rating');
+    ratingInput.setAttribute('type', 'number');
+    ratingInput.setAttribute('name', 'rating');
+    ratingInput.setAttribute('min', '0');
+    ratingInput.setAttribute('min', '5');
+    ratingInput.setAttribute('placeholder', 'Enter a number between 0 and 5');
+    form.appendChild(labelRating);
+    form.appendChild(ratingInput);
+
+    // Create a textarea field with a label
+    const labelComments = document.createElement('label');
+    labelComments.setAttribute('for', 'comments');
+    labelComments.innerHTML = 'Enter your Review:';
+    const commentsArea = document.createElement('textarea');
+    commentsArea.setAttribute('id', 'comments');
+    commentsArea.setAttribute('name', 'commentstext');
+    commentsArea.setAttribute('rows', '7');
+    commentsArea.setAttribute('cols', '7');
+    commentsArea.setAttribute('placeholder', 'Enter your comments');
+    form.appendChild(labelComments);
+    form.appendChild(commentsArea);
+
+    // Create the buttons for the form
+    const btnDiv = document.createElement('div');
+    btnDiv.classList.add('form-btn-container');
+
+    const btnSubmit = document.createElement('button');
+    btnSubmit.innerHTML = 'Submit';
+    btnSubmit.setAttribute('id', 'submit-review');
+    btnDiv.appendChild(btnSubmit);
+
+    const btnClose = document.createElement('button');
+    btnClose.innerHTML = 'Cancel';
+    btnClose.classList.add('close-review');
+    btnClose.addEventListener('click', event => {
+      event.preventDefault();
+      const form = document.getElementById('form-reviews');
+      form.reset();
+      form.classList.toggle('hidden');
+    });
+    btnDiv.appendChild(btnClose);
+
+    form.appendChild(btnDiv);
+
+    container.appendChild(form);
+  }
 };
 
 /**
