@@ -174,7 +174,7 @@ a#skip-link:focus {
 /* ====================== Restaurant Filtering ====================== */
 .filter-options {
   width: 100vw;
-  height: 8rem;
+  height: fit-content;
   background-color: #3397db;
 }
 .filter-options h2 {
