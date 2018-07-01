@@ -52,6 +52,9 @@ module.exports = class DBHelper {
                 let tx = db.transaction('restaurants', 'readwrite');
                 let store = tx.objectStore('restaurants');
                 fetchedData.forEach(restaurant => {
+                  if (!restaurant.hasOwnProperty('is_favorite')) {
+                    restaurant.is_favorite = false;
+                  }
                   store.put(restaurant);
                 });
               });
