@@ -264,10 +264,13 @@ createRestaurantHTML = restaurant => {
   const fave = document.createElement('button');
   fave.innerHTML = '★';
   fave.setAttribute('aria-label', 'Add as favourite');
-  fave.classList.add('favourite-button');
   fave.addEventListener('click', event => {
     markAsFavourite(event);
   });
+
+  restaurant.is_favorite
+    ? fave.classList.add('favourite-button', 'favourited')
+    : fave.classList.add('favourite-button');
   container.append(fave);
 
   li.append(container);
@@ -286,6 +289,8 @@ createRestaurantHTML = restaurant => {
   more.setAttribute('role', 'button');
   li.append(more);
 
+  const id = more.href.split('=')[1];
+  fave.setAttribute('data-rid', id);
   return li;
 };
 
@@ -305,8 +310,11 @@ addMarkersToMap = (restaurants = self.restaurants) => {
 };
 
 /**
- * Mark a restaurant as a favourite
+ * Mark a restaurant as a favourite in db
+ * if successsful css updated
  */
 markAsFavourite = event => {
   event.target.classList.toggle('favourited');
+  const id = event.target.getAttribute('data-rid');
+  DBHelper.markFavourite(id);
 };

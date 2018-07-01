@@ -60,7 +60,6 @@ module.exports = class DBHelper {
             });
         } else {
           //return all the data in the database
-          console.log('serving from idb');
           callback(null, data);
         }
       });
@@ -231,5 +230,27 @@ module.exports = class DBHelper {
     );
     marker.addTo(map);
     return marker;
+  }
+
+  /**
+   * Mark a restuaruant as a favourite
+   */
+  static markFavourite(id) {
+    dbPromise
+      .then(db => {
+        return db
+          .transaction('restaurants')
+          .objectStore('restaurants')
+          .get(parseInt(id));
+      })
+      .then(restaurant => {
+        restaurant.is_favorite = restaurant.is_favorite ? false : true;
+
+        return dbPromise.then(db => {
+          const tx = db.transaction('restaurants', 'readwrite');
+          tx.objectStore('restaurants').put(restaurant);
+          return tx.complete;
+        });
+      });
   }
 };
