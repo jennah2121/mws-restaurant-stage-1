@@ -355,6 +355,7 @@ a#skip-link:focus {
 }
 #reviews-container {
   padding: 30px 0px 80px;
+  width: 100%;
 }
 #reviews-container h3 {
   color: #0472ca;
@@ -365,6 +366,87 @@ a#skip-link:focus {
 #reviews-list {
   padding: 0px 2rem;
 }
+
+.review-form {
+  display: flex;
+  flex-direction: column;
+  width: calc(90% - 1.5rem);
+  padding: 1.5rem;
+  margin: auto;
+  box-sizing: border-box;
+  border: solid 3px #262932;
+  border-radius: 0.3rem;
+  background-color: aliceblue;
+}
+
+.review-form-title {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.review-form label {
+  text-transform: uppercase;
+  color: #333;
+  font-weight: 700;
+}
+
+.review-form input {
+  height: 1.7rem;
+}
+
+.review-form input,
+.review-form textarea {
+  border-radius: 0.3rem;
+  border: solid 1px lightgrey;
+  padding-left: 0.5rem;
+  font-size: 0.85rem;
+  margin-bottom: 1.2rem;
+}
+
+.review-form input::-webkit-input-placeholder,
+.review-form textarea::-webkit-input-placeholder {
+  font-size: 0.8rem;
+}
+
+.form-btn-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+#submit-review {
+  margin-right: 1rem;
+}
+
+#submit-review,
+.close-review,
+.add-review {
+  width: fit-content;
+  height: 40px;
+  text-align: center;
+  border: solid 2px;
+  border-radius: 0.3rem;
+  text-transform: uppercase;
+  color: white;
+  background-color: #0472ca;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+#submit-review:hover,
+.close-review:hover,
+.add-review:hover {
+  color: #ffffff;
+  background-color: #262932;
+  border: none;
+}
+
+.hidden {
+  display: none;
+}
+
 #reviews-list li {
   background-color: #f6fcff;
   border: 2px solid #f3f3f3;
