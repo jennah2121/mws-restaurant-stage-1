@@ -315,6 +315,7 @@ createFormHTML = () => {
     const btnClose = document.createElement('button');
     btnClose.innerHTML = 'Cancel';
     btnClose.classList.add('close-review');
+    btnClose.setAttribute('aria-label', 'Cancel and close form');
     btnClose.addEventListener('click', event => {
       event.preventDefault();
       const form = document.getElementById('form-reviews');
