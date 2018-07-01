@@ -46,6 +46,13 @@
             <option value="all">All Cuisines</option>
           </select>
         </label>
+        <label aria-label="Select Favourites">
+          <select id="favourites-select" name="favourite status" onchange="filterByFavourite()">
+            <option value="all">All Restaurants</option>
+            <option value="true">Show Favourites</option>
+            <option value="false">Hide Favourties</option>
+          </select>
+        </label>
       </div>
       <ul id="restaurants-list"></ul>
     </section>

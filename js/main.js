@@ -2,6 +2,7 @@ let restaurants,
   neighborhoods,
   cuisines,
   observer,
+  favourites,
   newMap,
   markers = [];
 
@@ -151,6 +152,24 @@ updateRestaurants = () => {
       }
     }
   );
+};
+
+/**
+ * update the page and map for restaurants based on favourite status
+ */
+filterByFavourite = () => {
+  const faveSelect = document.getElementById('favourites-select');
+  const faveIndex = faveSelect.selectedIndex;
+  const showHide = faveSelect[faveIndex].value;
+
+  DBHelper.fetchRestaurantByFavouriteStatus(showHide, (error, restaurants) => {
+    if (error) {
+      console.log(error);
+    } else {
+      resetRestaurants(restaurants);
+      fillRestaurantsHTML();
+    }
+  });
 };
 
 /**

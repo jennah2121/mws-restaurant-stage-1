@@ -188,6 +188,33 @@ module.exports = class DBHelper {
   }
 
   /**
+   * Fetch restaurants based on favourite status
+   */
+  static fetchRestaurantByFavouriteStatus(show, callback) {
+    //Fetch all restaurants
+    DBHelper.fetchRestaurants((error, restaurants) => {
+      if (error) {
+        callback(error, null);
+      } else {
+        // use the show argument to return what the user wants
+        if (show === 'true' || show === 'false') {
+          if (show == 'true') show = true;
+          if (show == 'false') show = false;
+
+          const data = restaurants.filter(
+            restaurant => restaurant.is_favorite == show
+          );
+
+          callback(null, data);
+        } else {
+          // Return all the restaurants
+          callback(null, restaurants);
+        }
+      }
+    });
+  }
+
+  /**
    * Restaurant page URL.
    */
   static urlForRestaurant(restaurant) {
