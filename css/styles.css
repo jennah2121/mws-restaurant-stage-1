@@ -390,17 +390,25 @@ a#skip-link:focus {
   font-weight: 700;
 }
 
-.review-form input {
+.review-form input,
+.review-form select {
   height: 1.7rem;
 }
 
 .review-form input,
-.review-form textarea {
+.review-form textarea,
+.review-form select {
   border-radius: 0.3rem;
   border: solid 1px lightgrey;
   padding-left: 0.5rem;
   font-size: 0.85rem;
   margin-bottom: 1.2rem;
+  background-color: white;
+}
+
+.review-form textarea {
+  overflow: scroll;
+  resize: none;
 }
 
 .review-form input::-webkit-input-placeholder,

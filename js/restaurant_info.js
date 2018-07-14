@@ -276,19 +276,25 @@ createFormHTML = () => {
     form.appendChild(labelName);
     form.appendChild(nameInput);
 
-    //create a rating input field with a label
+    // Create a rating select field
     const labelRating = document.createElement('label');
     labelRating.setAttribute('for', 'rating');
     labelRating.innerHTML = 'Rating:';
-    const ratingInput = document.createElement('input');
-    ratingInput.setAttribute('id', 'rating');
-    ratingInput.setAttribute('type', 'number');
-    ratingInput.setAttribute('name', 'rating');
-    ratingInput.setAttribute('min', '0');
-    ratingInput.setAttribute('min', '5');
-    ratingInput.setAttribute('placeholder', 'Enter a number between 0 and 5');
+    const ratingSelect = document.createElement('select');
+    ratingSelect.setAttribute('id', 'rating');
+    const option = document.createElement('option');
+    option.innerHTML = '--Please select a rating--';
+    ratingSelect.appendChild(option);
     form.appendChild(labelRating);
-    form.appendChild(ratingInput);
+    form.appendChild(ratingSelect);
+
+    // Create options for the select
+    for (let i = 0; i < 6; i++) {
+      const option = document.createElement('option');
+      option.value = i;
+      option.innerHTML = i;
+      ratingSelect.appendChild(option);
+    }
 
     // Create a textarea field with a label
     const labelComments = document.createElement('label');
