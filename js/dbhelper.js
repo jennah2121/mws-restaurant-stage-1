@@ -68,6 +68,17 @@ module.exports = class DBHelper {
   }
 
   /**
+   * Add a review to db
+   */
+  static addReviewToidb(formData, callback) {
+    dbPromise.then(db => {
+      const tx = db.transaction('reviews', 'readwrite');
+      tx.objectStore('reviews').put(formData);
+      return tx.complete;
+    });
+  }
+
+  /**
    * Fetch all restaurants.
    */
   static fetchRestaurants(callback) {

@@ -1,4 +1,5 @@
-let restaurantGlobal, observer, restaurant, newMap, allReviews;
+// Key is the value used for the keyPath in idb
+let restaurantGlobal, observer, restaurant, newMap, allReviews, key;
 
 const DBHelper = require('./dbhelper.js');
 
@@ -35,16 +36,25 @@ document.addEventListener('DOMContentLoaded', event => {
       createObserver();
     }
   });
+  getReviewsFromDB();
+});
 
+/**
+ * Fetch the reviews from the database
+ */
+getReviewsFromDB = () => {
   DBHelper.fetchReviews((error, reviews) => {
     if (error) {
       console.log(error);
     } else {
       allReviews = reviews;
+      // Set key to the largest id
+      let nums = reviews.map(obj => obj.id);
+      key = Math.max(...nums);
       fillReviewsHTML(reviews);
     }
   });
-});
+};
 
 /**
  * Create an observer to watch for when the map div is visible
@@ -346,9 +356,20 @@ createFormHTML = () => {
     btnSubmit.innerHTML = 'Submit';
     btnSubmit.setAttribute('id', 'submit-review');
     btnSubmit.addEventListener('click', event => {
-      // event.preventDefault();
-      const restaurant_id = document.querySelector('#rID');
-      restaurant_id.setAttribute('value', restaurantGlobal.id);
+      event.preventDefault();
+      let formData = {};
+      let form = document.querySelector('#form-reviews');
+      key++;
+
+      for (var i = 0; i < form.length - 2; i++) {
+        formData[form[i].name] = form[i].value;
+      }
+
+      formData.restaurant_id = restaurantGlobal.id;
+      formData.id = key;
+      formData.createdAt = Date.now();
+
+      DBHelper.addReviewToidb(formData);
     });
     btnDiv.appendChild(btnSubmit);
 
