@@ -274,6 +274,10 @@ createFormHTML = () => {
     rIDInput.setAttribute('id', 'rID');
     rIDInput.setAttribute('disabled', 'true');
     rIDInput.setAttribute('name', 'restaurant_id');
+    rIDInput.setAttribute(
+      'placeholder',
+      `You are reviewing ${restaurantGlobal.name}`
+    );
     form.appendChild(labelrID);
     form.appendChild(rIDInput);
 
