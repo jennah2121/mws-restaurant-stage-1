@@ -267,7 +267,7 @@ createFormHTML = () => {
     form.appendChild(formTitle);
 
     // Create input field for restaurant id(rID)
-    const labelrId = document.createElement('label');
+    const labelrID = document.createElement('label');
     labelrID.setAttribute('for', 'rID');
     labelrID.innerHTML = 'Review for:';
     const rIDInput = document.createElement('input');
