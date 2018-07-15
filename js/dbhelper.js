@@ -4,6 +4,9 @@ const dbPromise = idb.open('restaurantsDB', 1, upgradeDB => {
   upgradeDB.createObjectStore('restaurants', {
     keyPath: 'id'
   });
+  upgradeDB.createObjectStore('reviews', {
+    keyPath: 'id'
+  });
 });
 
 /**
@@ -16,7 +19,52 @@ module.exports = class DBHelper {
    */
   static get DATABASE_URL() {
     const port = 1337; // Change this to your server port
-    return `http://localhost:${port}/restaurants`;
+    return `http://localhost:${port}`;
+  }
+
+  /**
+   * Fetch all reviews
+   */
+  static fetchReviews(callback) {
+    dbPromise
+      .then(db => {
+        if (!db) {
+          console.log('no db was created');
+          return;
+        }
+        return db;
+      })
+      .then(db => {
+        return db
+          .transaction('reviews')
+          .objectStore('reviews')
+          .getAll();
+      })
+      .then(data => {
+        if (data.length === 0) {
+          // Fetch the reviews from the server and add it to db
+          return fetch(`${DBHelper.DATABASE_URL}/reviews`)
+            .then(response => {
+              if (response.status !== 200) {
+                console.log('error');
+              }
+              return response.json();
+            })
+            .then(fetchedData => {
+              dbPromise.then(db => db).then(db => {
+                let tx = db.transaction('reviews', 'readwrite');
+                let store = tx.objectStore('reviews');
+                fetchedData.forEach(review => {
+                  store.put(review);
+                });
+              });
+              callback(null, fetchedData);
+            });
+        } else {
+          // return all the data in the database
+          callback(null, data);
+        }
+      });
   }
 
   /**
@@ -40,7 +88,7 @@ module.exports = class DBHelper {
       .then(data => {
         if (data.length === 0) {
           // Fetch the data from the server and add it to db
-          return fetch(DBHelper.DATABASE_URL)
+          return fetch(`${DBHelper.DATABASE_URL}/restaurants`)
             .then(response => {
               if (response.status !== 200) {
                 console.log('error');
