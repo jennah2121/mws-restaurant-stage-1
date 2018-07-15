@@ -1,4 +1,4 @@
-let restaurantGlobal, observer, restaurant, newMap;
+let restaurantGlobal, observer, restaurant, newMap, allReviews;
 
 const DBHelper = require('./dbhelper.js');
 
@@ -33,6 +33,15 @@ document.addEventListener('DOMContentLoaded', event => {
       restaurantGlobal = restaurant;
       fillBreadcrumb();
       createObserver();
+    }
+  });
+
+  DBHelper.fetchReviews((error, reviews) => {
+    if (error) {
+      console.log(error);
+    } else {
+      allReviews = reviews;
+      fillReviewsHTML(reviews);
     }
   });
 });
@@ -162,12 +171,10 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
 
-  // fill operating hours
+  // Fill operating hours
   if (restaurant.operating_hours) {
     fillRestaurantHoursHTML();
   }
-  // fill reviews
-  fillReviewsHTML();
 };
 
 /**
@@ -195,7 +202,11 @@ fillRestaurantHoursHTML = (
 /**
  * Create all reviews HTML and add them to the webpage.
  */
-fillReviewsHTML = (reviews = self.restaurant.reviews) => {
+fillReviewsHTML = reviews => {
+  reviews = reviews.filter(
+    review => review.restaurant_id === restaurantGlobal.id
+  );
+
   const container = document.getElementById('reviews-container');
   const title = document.createElement('h3');
   title.innerHTML = 'Reviews';
@@ -334,6 +345,11 @@ createFormHTML = () => {
     const btnSubmit = document.createElement('button');
     btnSubmit.innerHTML = 'Submit';
     btnSubmit.setAttribute('id', 'submit-review');
+    btnSubmit.addEventListener('click', event => {
+      // event.preventDefault();
+      const restaurant_id = document.querySelector('#rID');
+      restaurant_id.setAttribute('value', restaurantGlobal.id);
+    });
     btnDiv.appendChild(btnSubmit);
 
     const btnClose = document.createElement('button');
