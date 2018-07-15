@@ -266,6 +266,17 @@ createFormHTML = () => {
     formTitle.classList.add('review-form-title');
     form.appendChild(formTitle);
 
+    // Create input field for restaurant id(rID)
+    const labelrId = document.createElement('label');
+    labelrID.setAttribute('for', 'rID');
+    labelrID.innerHTML = 'Review for:';
+    const rIDInput = document.createElement('input');
+    rIDInput.setAttribute('id', 'rID');
+    rIDInput.setAttribute('disabled', 'true');
+    rIDInput.setAttribute('name', 'restaurant_id');
+    form.appendChild(labelrID);
+    form.appendChild(rIDInput);
+
     // create a name input field with a label
     const labelName = document.createElement('label');
     labelName.setAttribute('for', 'name');
