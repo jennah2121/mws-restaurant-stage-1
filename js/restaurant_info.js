@@ -271,7 +271,7 @@ createFormHTML = () => {
     const nameInput = document.createElement('input');
     nameInput.setAttribute('id', 'name');
     nameInput.setAttribute('type', 'text');
-    nameInput.setAttribute('name', 'username');
+    nameInput.setAttribute('name', 'name');
     nameInput.setAttribute('placeholder', 'Enter your name');
     form.appendChild(labelName);
     form.appendChild(nameInput);
@@ -282,6 +282,7 @@ createFormHTML = () => {
     labelRating.innerHTML = 'Rating:';
     const ratingSelect = document.createElement('select');
     ratingSelect.setAttribute('id', 'rating');
+    ratingSelect.setAttribute('name', 'rating');
     const option = document.createElement('option');
     option.innerHTML = '--Please select a rating--';
     ratingSelect.appendChild(option);
@@ -302,7 +303,7 @@ createFormHTML = () => {
     labelComments.innerHTML = 'Enter your Review:';
     const commentsArea = document.createElement('textarea');
     commentsArea.setAttribute('id', 'comments');
-    commentsArea.setAttribute('name', 'commentstext');
+    commentsArea.setAttribute('name', 'comments');
     commentsArea.setAttribute('rows', '7');
     commentsArea.setAttribute('cols', '7');
     commentsArea.setAttribute('placeholder', 'Enter your comments');
