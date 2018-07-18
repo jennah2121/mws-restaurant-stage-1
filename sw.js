@@ -1,6 +1,7 @@
 let staticCacheName = 'restaurant-static-v1';
 let imagesCache = 'restaurant-images';
 let allCaches = [staticCacheName, imagesCache];
+const DBHelper = require('./js/dbhelper');
 
 /**
  * Add an install event for the service worker and cache static resources
@@ -99,4 +100,36 @@ self.addEventListener('activate', event => {
       })
       .then(() => self.clients.claim())
   );
+});
+
+/**
+ * Add a sync event
+ */
+self.addEventListener('sync', event => {
+  if (event.tag === 'syncReviews') {
+    event.waitUntil(
+      DBHelper.getAllFromReviewsOutbox().then(reviews => {
+        return Promise.all(
+          reviews.map(review => {
+            return fetch(
+              `${DBHelper.DATABASE_URL}/reviews/?restaurant_id=${
+                review.restaurant_id
+              }&name=${review.name}&rating=${review.rating}&comments=${
+                review.comments
+              }`,
+              {
+                method: 'POST'
+              }
+            ).then(response => {
+              if (response.statusText == 'Created') {
+                return DBHelper.deleteFromOutbox(review.id);
+              }
+            });
+          })
+        ).catch(error => {
+          console.log('There was an error: ', error);
+        });
+      })
+    );
+  }
 });
