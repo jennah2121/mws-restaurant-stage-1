@@ -20,6 +20,16 @@ if (navigator.serviceWorker) {
 }
 
 /**
+ * Register a sync for reviews
+ */
+registerReviewsSync = () => {
+  navigator.serviceWorker.ready
+    .then(reg => reg.sync.register('syncReviews'))
+    .then(() => console.log('sync worked'))
+    .catch(err => console.log('Error: ', error));
+};
+
+/**
  * Initialize the details page, called from HTML.
  */
 document.addEventListener('DOMContentLoaded', event => {
@@ -370,6 +380,7 @@ createFormHTML = () => {
       formData.createdAt = Date.now();
 
       DBHelper.addReviewToidb(formData);
+      registerReviewsSync();
     });
     btnDiv.appendChild(btnSubmit);
 
