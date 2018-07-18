@@ -7,6 +7,9 @@ const dbPromise = idb.open('restaurantsDB', 1, upgradeDB => {
   upgradeDB.createObjectStore('reviews', {
     keyPath: 'id'
   });
+  upgradeDB.createObjectStore('reviewsOutbox', {
+    keyPath: 'id'
+  });
 });
 
 /**
@@ -70,10 +73,16 @@ module.exports = class DBHelper {
   /**
    * Add a review to db
    */
-  static addReviewToidb(formData, callback) {
+  static addReviewToidb(formData) {
     dbPromise.then(db => {
       const tx = db.transaction('reviews', 'readwrite');
       tx.objectStore('reviews').put(formData);
+      return tx.complete;
+    });
+
+    dbPromise.then(db => {
+      const tx = db.transaction('reviewsOutbox', 'readwrite');
+      tx.objectStore('reviewsOutbox').put(formData);
       return tx.complete;
     });
   }
