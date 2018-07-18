@@ -88,6 +88,30 @@ module.exports = class DBHelper {
   }
 
   /**
+   * Get all the review in the outbox
+   */
+  static getAllFromReviewsOutbox() {
+    return dbPromise.then(db => {
+      return db
+        .transaction('reviewsOutbox')
+        .objectStore('reviewsOutbox')
+        .getAll();
+    });
+  }
+
+  /**
+   * Delete review from outbox
+   */
+  static deleteFromOutbox(key) {
+    console.log('deleting: ', key);
+    dbPromise.then(db => {
+      const tx = db.transaction('reviewsOutbox', 'readwrite');
+      tx.objectStore('reviewsOutbox').delete(key);
+      return tx.complete;
+    });
+  }
+
+  /**
    * Fetch all restaurants.
    */
   static fetchRestaurants(callback) {
