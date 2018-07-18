@@ -398,7 +398,10 @@ createFormHTML = () => {
 
     form.appendChild(btnDiv);
 
-    container.appendChild(form);
+    container.insertBefore(
+      form,
+      document.querySelector('.add-review').nextSibling
+    );
   }
 };
 

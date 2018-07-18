@@ -372,7 +372,7 @@ a#skip-link:focus {
   flex-direction: column;
   width: calc(90% - 1.5rem);
   padding: 1.5rem;
-  margin: auto;
+  margin: 2.5rem auto;
   box-sizing: border-box;
   border: solid 3px #262932;
   border-radius: 0.3rem;
