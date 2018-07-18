@@ -406,6 +406,11 @@ a#skip-link:focus {
   background-color: white;
 }
 
+/* The field in the form that says which restaurant the review is for*/
+#rID {
+  cursor: not-allowed;
+}
+
 .review-form textarea {
   overflow: scroll;
   resize: none;
