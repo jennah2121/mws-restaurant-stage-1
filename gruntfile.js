@@ -16,6 +16,10 @@ module.exports = function(grunt) {
       restaurants: {
         src: 'js/restaurant_info.js',
         dest: 'build/js/restaurant_info.js'
+      },
+      sw: {
+        src: './sw.js',
+        dest: 'build/sw.js'
       }
     },
     // Configure grunt-replace
@@ -58,7 +62,8 @@ module.exports = function(grunt) {
               '!**/img/**',
               'manifest.json',
               '!**/data/**',
-              '!dbhlper.js'
+              '!dbhlper.js',
+              '!sw.js'
             ],
             dest: 'build/'
           }
