@@ -214,7 +214,7 @@ fillRestaurantHoursHTML = (
  */
 fillReviewsHTML = reviews => {
   reviews = reviews.filter(
-    review => review.restaurant_id === restaurantGlobal.id
+    review => review.restaurant_id == restaurantGlobal.id
   );
 
   const container = document.getElementById('reviews-container');
@@ -365,7 +365,7 @@ createFormHTML = () => {
         formData[form[i].name] = form[i].value;
       }
 
-      formData.restaurant_id = restaurantGlobal.id;
+      formData.restaurant_id = parseInt(restaurantGlobal.id);
       formData.id = key;
       formData.createdAt = Date.now();
 
