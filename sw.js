@@ -121,7 +121,7 @@ self.addEventListener('sync', event => {
                 method: 'POST'
               }
             ).then(response => {
-              if (response.statusText == 'Created') {
+              if (response.status === 201) {
                 return DBHelper.deleteFromOutbox(review.id);
               }
             });
