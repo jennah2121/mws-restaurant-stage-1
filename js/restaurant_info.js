@@ -25,7 +25,7 @@ if (navigator.serviceWorker) {
 registerReviewsSync = () => {
   navigator.serviceWorker.ready
     .then(reg => reg.sync.register('syncReviews'))
-    .then(() => console.log('sync worked'))
+    .then(reg => console.log('sync worked'))
     .catch(err => console.log('Error: ', error));
 };
 
@@ -288,8 +288,6 @@ createFormHTML = () => {
     const form = document.createElement('form');
     form.classList.add('review-form');
     form.setAttribute('id', 'form-reviews');
-    form.setAttribute('method', 'POST');
-    form.setAttribute('Action', 'http://localhost:1337/reviews/');
 
     //create title for form
     const formTitle = document.createElement('h4');
