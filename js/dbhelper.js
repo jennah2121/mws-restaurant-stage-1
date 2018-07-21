@@ -10,6 +10,9 @@ const dbPromise = idb.open('restaurantsDB', 1, upgradeDB => {
   upgradeDB.createObjectStore('reviewsOutbox', {
     keyPath: 'id'
   });
+  upgradeDB.createObjectStore('favoritesOutbox', {
+    keyPath: 'id'
+  });
 });
 
 /**
@@ -400,6 +403,10 @@ module.exports = class DBHelper {
         return dbPromise.then(db => {
           const tx = db.transaction('restaurants', 'readwrite');
           tx.objectStore('restaurants').put(restaurant);
+
+          const tx2 = db.transaction('favoritesOutbox', 'readwrite');
+          tx2.objectStore('favoritesOutbox').put(restaurant);
+
           return tx.complete;
         });
       });
