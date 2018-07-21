@@ -107,29 +107,6 @@ self.addEventListener('activate', event => {
  */
 self.addEventListener('sync', event => {
   if (event.tag === 'syncReviews') {
-    event.waitUntil(
-      DBHelper.getAllFromReviewsOutbox().then(reviews => {
-        return Promise.all(
-          reviews.map(review => {
-            return fetch(
-              `${DBHelper.DATABASE_URL}/reviews/?restaurant_id=${
-                review.restaurant_id
-              }&name=${review.name}&rating=${review.rating}&comments=${
-                review.comments
-              }`,
-              {
-                method: 'POST'
-              }
-            ).then(response => {
-              if (response.status === 201) {
-                return DBHelper.deleteFromOutbox(review.id);
-              }
-            });
-          })
-        ).catch(error => {
-          console.log('There was an error: ', error);
-        });
-      })
-    );
+    event.waitUntil(DBHelper.addReviewsToServer());
   }
 });

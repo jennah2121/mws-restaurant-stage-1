@@ -112,6 +112,35 @@ module.exports = class DBHelper {
   }
 
   /**
+   * Add all the reviews in the outbox to the server
+   */
+  static addReviewsToServer() {
+    console.log('about to add to server');
+    return DBHelper.getAllFromReviewsOutbox().then(reviews => {
+      return Promise.all(
+        reviews.map(review => {
+          return fetch(
+            `${DBHelper.DATABASE_URL}/reviews/?restaurant_id=${
+              review.restaurant_id
+            }&name=${review.name}&rating=${review.rating}&comments=${
+              review.comments
+            }`,
+            {
+              method: 'POST'
+            }
+          ).then(response => {
+            if (response.status === 201) {
+              return DBHelper.deleteFromOutbox(review.id);
+            }
+          });
+        })
+      ).catch(error => {
+        console.log('There was an error: ', error);
+      });
+    });
+  }
+
+  /**
    * Fetch all restaurants.
    */
   static fetchRestaurants(callback) {
