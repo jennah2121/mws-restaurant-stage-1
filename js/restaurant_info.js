@@ -30,6 +30,16 @@ registerReviewsSync = () => {
 };
 
 /**
+ * Register a sync for favorites
+ */
+registerFavoritesSync = () => {
+  navigator.serviceWorker.ready
+    .then(reg => reg.sync.register('syncFavorites'))
+    .then(reg => console.log('sync for favorties worked'))
+    .catch(err => console.log('Error: ', error));
+};
+
+/**
  * Initialize the details page, called from HTML.
  */
 document.addEventListener('DOMContentLoaded', event => {
@@ -147,6 +157,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   fave.setAttribute('data-rid', restaurant.id);
   fave.addEventListener('click', event => {
     markAsFavourite(event);
+    registerFavoritesSync();
   });
   if (restaurant.is_favorite) fave.classList.add('favourited');
 
