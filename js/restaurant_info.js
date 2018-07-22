@@ -388,6 +388,9 @@ createFormHTML = () => {
       formData.id = key;
       formData.createdAt = Date.now();
 
+      form.reset();
+      form.classList.toggle('hidden');
+
       DBHelper.addReviewToidb(formData);
       registerReviewsSync();
     });
