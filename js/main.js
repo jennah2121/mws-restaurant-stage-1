@@ -32,6 +32,16 @@ if (navigator.serviceWorker) {
 }
 
 /**
+ * Register a sync for favorites
+ */
+registerFavoritesSync = () => {
+  navigator.serviceWorker.ready
+    .then(reg => reg.sync.register('syncFavorites'))
+    .then(reg => console.log('sync for favorties worked'))
+    .catch(err => console.log('Error: ', error));
+};
+
+/**
  * Fetch all neighborhoods and set their HTML.
  */
 fetchNeighborhoods = () => {
@@ -285,6 +295,7 @@ createRestaurantHTML = restaurant => {
   fave.setAttribute('aria-label', 'Add as favourite');
   fave.addEventListener('click', event => {
     markAsFavourite(event);
+    registerFavoritesSync();
   });
 
   restaurant.is_favorite
