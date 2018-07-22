@@ -91,13 +91,13 @@ module.exports = class DBHelper {
   }
 
   /**
-   * Get all the review in the outbox
+   * Get all the data from a store
    */
-  static getAllFromReviewsOutbox() {
+  static getAllFromOutbox(store) {
     return dbPromise.then(db => {
       return db
-        .transaction('reviewsOutbox')
-        .objectStore('reviewsOutbox')
+        .transaction(store)
+        .objectStore(store)
         .getAll();
     });
   }
@@ -105,11 +105,11 @@ module.exports = class DBHelper {
   /**
    * Delete review from outbox
    */
-  static deleteFromOutbox(key) {
+  static deleteFromOutbox(store, key) {
     console.log('deleting: ', key);
     dbPromise.then(db => {
-      const tx = db.transaction('reviewsOutbox', 'readwrite');
-      tx.objectStore('reviewsOutbox').delete(key);
+      const tx = db.transaction(store, 'readwrite');
+      tx.objectStore(store).delete(key);
       return tx.complete;
     });
   }
@@ -119,7 +119,7 @@ module.exports = class DBHelper {
    */
   static addReviewsToServer() {
     console.log('about to add to server');
-    return DBHelper.getAllFromReviewsOutbox().then(reviews => {
+    return DBHelper.getAllFromOutbox('reviewsOutbox').then(reviews => {
       return Promise.all(
         reviews.map(review => {
           return fetch(
@@ -133,12 +133,42 @@ module.exports = class DBHelper {
             }
           ).then(response => {
             if (response.status === 201) {
-              return DBHelper.deleteFromOutbox(review.id);
+              return DBHelper.deleteFromOutbox('reviewsOutbox', review.id);
             }
           });
         })
       ).catch(error => {
         console.log('There was an error: ', error);
+      });
+    });
+  }
+
+  /**
+   * Update restaurants in the server
+   * used when the favourites property changes
+   */
+  static updateFavoritesInServer() {
+    return DBHelper.getAllFromOutbox('favoritesOutbox').then(restaurants => {
+      return Promise.all(
+        restaurants.map(restaurant => {
+          return fetch(
+            `${DBHelper.DATABASE_URL}/restaurants/${
+              restaurant.id
+            }/?is_favorite=${restaurant.is_favorite}`,
+            {
+              method: 'PUT'
+            }
+          ).then(response => {
+            if (response.status === 200) {
+              return DBHelper.deleteFromOutbox(
+                'favoritesOutbox',
+                restaurant.id
+              );
+            }
+          });
+        })
+      ).catch(error => {
+        console.log('There was an error with syncing favorites: ', error);
       });
     });
   }
