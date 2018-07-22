@@ -109,4 +109,8 @@ self.addEventListener('sync', event => {
   if (event.tag === 'syncReviews') {
     event.waitUntil(DBHelper.addReviewsToServer());
   }
+
+  if (event.tag === 'syncFavorites') {
+    event.waitUntil(DBHelper.updateFavoritesInServer());
+  }
 });
