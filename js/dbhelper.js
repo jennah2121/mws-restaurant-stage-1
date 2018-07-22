@@ -106,7 +106,6 @@ module.exports = class DBHelper {
    * Delete review from outbox
    */
   static deleteFromOutbox(store, key) {
-    console.log('deleting: ', key);
     dbPromise.then(db => {
       const tx = db.transaction(store, 'readwrite');
       tx.objectStore(store).delete(key);
@@ -118,7 +117,6 @@ module.exports = class DBHelper {
    * Add all the reviews in the outbox to the server
    */
   static addReviewsToServer() {
-    console.log('about to add to server');
     return DBHelper.getAllFromOutbox('reviewsOutbox').then(reviews => {
       return Promise.all(
         reviews.map(review => {
@@ -212,7 +210,6 @@ module.exports = class DBHelper {
                   store.put(restaurant);
                 });
               });
-              console.log('after add to db: ', fetchedData);
               callback(null, fetchedData);
             });
         } else {
