@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', event => {
     } else {
       restaurantGlobal = restaurant;
       fillBreadcrumb();
+      fillBanner();
       createObserver();
     }
   });
@@ -455,6 +456,28 @@ window.addEventListener('resize', () => {
     document.querySelector('.detail').style.marginTop = 95 + 'px';
   }
 });
+
+/**
+ * Add content to the banner
+ */
+
+fillBanner = () => {
+  var banner = document.querySelector('#banner');
+
+  var text = document.createElement('p');
+  text.innerHTML = 'New content available. Click refresh to view.';
+
+  var button = document.createElement('button');
+  button.innerHTML = 'Refresh';
+  button.setAttribute('id', 'refresh');
+  button.addEventListener('click', () => {
+    console.log('should reload');
+    window.location.reload(true);
+  });
+
+  banner.appendChild(text);
+  banner.appendChild(button);
+};
 
 /**
  * Mark a restaurant as a favourite in db
