@@ -394,8 +394,10 @@ createFormHTML = () => {
 
       DBHelper.addReviewToidb(formData).then(() => {
         // show the banner to alert the user to new content
-        document.querySelector('#banner').classList.toggle('hidden');
-        document.querySelector('#banner').style.display = 'flex';
+        let banner = document.querySelector('#banner');
+        banner.classList.toggle('hidden');
+        banner.setAttribute('aria-hidden', 'false');
+        banner.style.display = 'flex';
         accountForBannerHeight();
       });
       registerReviewsSync();
@@ -490,8 +492,8 @@ fillBanner = () => {
   button.innerHTML = 'Refresh';
   button.setAttribute('id', 'refresh');
   button.addEventListener('click', () => {
-    console.log('should reload');
     window.location.reload(true);
+    banner.setAttribute('aria-hidden', 'true');
   });
 
   banner.appendChild(text);
