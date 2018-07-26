@@ -78,16 +78,18 @@ module.exports = class DBHelper {
    */
   static addReviewToidb(formData) {
     dbPromise.then(db => {
-      const tx = db.transaction('reviews', 'readwrite');
-      tx.objectStore('reviews').put(formData);
-      return tx.complete;
-    });
-
-    dbPromise.then(db => {
       const tx = db.transaction('reviewsOutbox', 'readwrite');
       tx.objectStore('reviewsOutbox').put(formData);
       return tx.complete;
     });
+
+    return dbPromise
+      .then(db => {
+        const tx = db.transaction('reviews', 'readwrite');
+        tx.objectStore('reviews').put(formData);
+        return tx.complete;
+      })
+      .then(() => console.log('new content for user'));
   }
 
   /**
