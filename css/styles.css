@@ -304,7 +304,6 @@ a#skip-link:focus {
   position: fixed;
   width: 100%;
   z-index: 2000;
-  display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
@@ -361,7 +360,6 @@ a#skip-link:focus {
 
 #restaurant-container {
   position: relative;
-  top: 62px;
 }
 
 #restaurant-container,
