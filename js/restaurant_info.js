@@ -486,7 +486,7 @@ fillBanner = () => {
   var banner = document.querySelector('#banner');
 
   var text = document.createElement('p');
-  text.innerHTML = 'New content available. Click refresh to view.';
+  text.innerHTML = 'New content available. Refresh to view.';
 
   var button = document.createElement('button');
   button.innerHTML = 'Refresh';
