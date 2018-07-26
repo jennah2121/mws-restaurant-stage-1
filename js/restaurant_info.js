@@ -392,7 +392,12 @@ createFormHTML = () => {
       form.reset();
       form.classList.toggle('hidden');
 
-      DBHelper.addReviewToidb(formData);
+      DBHelper.addReviewToidb(formData).then(() => {
+        // show the banner to alert the user to new content
+        document.querySelector('#banner').classList.toggle('hidden');
+        document.querySelector('#banner').style.display = 'flex';
+        accountForBannerHeight();
+      });
       registerReviewsSync();
     });
     btnDiv.appendChild(btnSubmit);
@@ -449,18 +454,32 @@ adjustMaincontentMargin = () => {
   document.querySelector('.detail').style.marginTop = headerHeight + 'px';
 };
 
+/**
+ * Set restaurantcontainer top position based on the height of the banner
+ */
+accountForBannerHeight = () => {
+  let bannerHeight = document.querySelector('#banner').offsetHeight;
+  document.querySelector('#restaurant-container').style.top =
+    bannerHeight + 'px';
+  console.log('banner height: ', bannerHeight);
+};
+
 window.addEventListener('resize', () => {
   if (window.innerHeight >= 417) {
     adjustMaincontentMargin();
   } else {
     document.querySelector('.detail').style.marginTop = 95 + 'px';
   }
+
+  // If the banner is visible account for its height when positioning the restaurant container
+  if (!banner.classList.contains('hidden')) {
+    accountForBannerHeight();
+  }
 });
 
 /**
  * Add content to the banner
  */
-
 fillBanner = () => {
   var banner = document.querySelector('#banner');
 
