@@ -306,6 +306,7 @@ a#skip-link:focus {
   z-index: 2000;
   justify-content: space-evenly;
   align-items: center;
+  padding: 0 1rem;
 }
 
 .inside #map-container {
@@ -448,10 +449,7 @@ a#skip-link:focus {
   margin-right: 1rem;
 }
 
-#submit-review,
-.close-review,
-.add-review,
-#refresh {
+button {
   width: fit-content;
   height: 40px;
   text-align: center;
@@ -466,9 +464,7 @@ a#skip-link:focus {
   cursor: pointer;
 }
 
-#submit-review:hover,
-.close-review:hover,
-.add-review:hover {
+button:hover {
   color: #ffffff;
   background-color: #262932;
   border: none;
