@@ -13,7 +13,7 @@
 
 #### Important
 
-This project depends on a server from another repo. To use this project you will need to clone the server found [here](https://github.com/udacity/mws-restaurant-stage-2) and follow the set up instructions on that repo which are in sum:
+This project depends on a server from another repo. To use this project you will need to clone the server found [here](https://github.com/udacity/mws-restaurant-stage-3) and follow the set up instructions on that repo which are in sum:
 
 1.  `npm i` to install the required dependencies
 2.  `npm run start` - this loads the server which contains the data set for this project
