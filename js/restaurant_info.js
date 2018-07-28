@@ -463,7 +463,6 @@ accountForBannerHeight = () => {
   let bannerHeight = document.querySelector('#banner').offsetHeight;
   document.querySelector('#restaurant-container').style.top =
     bannerHeight + 'px';
-  console.log('banner height: ', bannerHeight);
 };
 
 window.addEventListener('resize', () => {
